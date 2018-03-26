@@ -3,20 +3,20 @@ Calendar viewer
 
 ## Dev notes
 
-1. npm init -y
-1. npm i webpack --save-dev
-1. npm i webpack-cli --save-dev
-1. mkdir src
-1. add following to package.json
+* npm init -y
+* npm i webpack --save-dev
+* npm i webpack-cli --save-dev
+* mkdir src
+* add following to package.json
 ```
 "scripts": {
   "dev": "webpack --mode development
   "build": "webpack --mode production"
 }
 ```
-1. npm i babel-core babel-loader babel-preset-env --save-dev
+* npm i babel-core babel-loader babel-preset-env --save-dev
 
-1. create .babelrc
+* create .babelrc
 ```
 {
     "presets": [
@@ -26,7 +26,7 @@ Calendar viewer
 }
 ```
 
-1. create webpack.config.js
+* create webpack.config.js
 ```
 module.exports = {
   module: {
@@ -42,10 +42,10 @@ module.exports = {
   }
 };
 ```
-1. npm i react react-dom babel-preset-react --save-dev
-1. npm i html-webpack-plugin html-loader --save-dev
+* npm i react react-dom babel-preset-react --save-dev
+* npm i html-webpack-plugin html-loader --save-dev
 
-1. edit webpack config
+* edit webpack config
 ```
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 module.exports = {
@@ -78,7 +78,7 @@ module.exports = {
 };
 ```
 
-1. create react App.js
+* create react App.js
 ```
 import React from "react";
 import ReactDOM from "react-dom";
@@ -92,10 +92,10 @@ const App = () => {
 export default App;
 ReactDOM.render(<App />, document.getElementById("app"));
 ```
-1. add following to ser/index.js
+* add following to ser/index.js
 import App from "./App";
 
-1. create src/index.HtmlWebPackPlugin<!DOCTYPE html>
+* create src/index.HtmlWebPackPlugin<!DOCTYPE html>
 ```
 <html lang="en">
 <head>
@@ -118,9 +118,9 @@ body {
 }
 ```
 
-1. npm i webpack-dev-server --save-dev
+* npm i webpack-dev-server --save-dev
 
-1. add following 'scripts' section in package.json
+* add following 'scripts' section in package.json
 "start": "webpack-dev-server --mode development --open"
 
-1. npm run start
+* npm run start
