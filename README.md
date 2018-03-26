@@ -41,4 +41,5 @@ module.exports = {
   }
 };
 
-npm i react react-dom --save-dev
+npm i react react-dom babel-preset-react --save-dev
+npm i html-webpack-plugin html-loader --save-dev
