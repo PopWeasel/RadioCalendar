@@ -92,7 +92,7 @@ const App = () => {
 export default App;
 ReactDOM.render(<App />, document.getElementById("app"));
 ```
-* add following to ser/index.js
+* add following to src/index.js
 import App from "./App";
 
 * create src/index.HtmlWebPackPlugin<!DOCTYPE html>
@@ -122,5 +122,7 @@ body {
 
 * add following 'scripts' section in package.json
 "start": "webpack-dev-server --mode development --open"
+
+* npm i webpack-dev-server html-webpack-plugin mini-css-extract-plugin html-loader babel-core babel-loader babel-preset-env babel-preset-react mini-css-extract-plugin css-loader -save-dev
 
 * npm run start
