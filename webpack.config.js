@@ -35,5 +35,8 @@ module.exports = {
       filename: "[name].css",
       chunkFilename: "[id].css"
     })
-  ]
+  ],
+  externals: {
+    'Config': JSON.stringify(require('./config/app-config.json'))
+  }
 };
