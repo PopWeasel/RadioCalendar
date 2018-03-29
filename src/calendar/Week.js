@@ -1,7 +1,11 @@
 import React, {Component} from 'react';
 
-const Week = () => {
-  return(<div><p>Week</p></div>);
-};
+class Week extends Component {
+  render() {
+    return (
+      <div>Week Component</div>
+    );
+  }
+}
 
 export default Week;
