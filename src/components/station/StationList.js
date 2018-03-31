@@ -7,12 +7,14 @@ class StationList extends Component {
       value: props.stations[0].id
     };
     this.handleChange = this.handleChange.bind(this);
-
   }
 
 
   handleChange(event) {
     console.log("Change" + event);
+    this.setState({
+      value: event.target.value
+    });
   }
 
   componentDidMount() {
