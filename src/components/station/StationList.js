@@ -26,11 +26,17 @@ class StationList extends Component {
   }
 
   render() {
-    const stations = this.props.stations.map((station) => <option className="station" value={station.id} key={station.key} >{station.name}</option>);
+    const stations = this.props.stations.map((station) =>
+    <option className="station" value={station.id} key={station.key} >
+      {station.name}
+    </option>);
     return (
-          <select className="stations" onChange={this.handleChange} value={this.state.value}>
-            {stations}
-          </select>
+      <label>
+        Select a station&nbsp;
+        <select className="stations" onChange={this.handleChange} value={this.state.value}>
+          {stations}
+        </select>
+      </label>
     );
   }
 }
