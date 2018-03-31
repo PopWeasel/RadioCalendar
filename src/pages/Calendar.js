@@ -11,11 +11,27 @@ class Calendar extends Component {
       stations: this.props.stations,
       selectedStation: this.props.stations[0]
     };
+
+    this.onStationChange = this.onStationChange.bind(this);
   }
+
+  onStationChange(selectedStationId) {
+    const stations = this.state.stations;
+    const selectedStation = stations[stations.findIndex(station => station.id === selectedStationId)];
+    this.setState(
+      {
+        selectedStation: selectedStation
+      }
+    );
+  }
+
   render() {
     return(
       <div>
-        <StationList stations={this.state.stations} />
+        <StationList
+          stations={this.state.stations}
+          selectedStation={this.state.selectedStation}
+          onStationChange={this.onStationChange}/>
         <DateSelector />
         <Week selectedStation={this.state.selectedStation} />
       </div>
