@@ -2,6 +2,7 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
+  devtool: "#eval-source-map",
   module: {
     rules: [
       {
@@ -35,5 +36,8 @@ module.exports = {
       filename: "[name].css",
       chunkFilename: "[id].css"
     })
-  ]
+  ],
+  externals: {
+    'Config': JSON.stringify(require('./config/app-config.json'))
+  }
 };

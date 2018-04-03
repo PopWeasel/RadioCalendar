@@ -1,14 +1,25 @@
-import React from "react";
+import React, {Component} from "react";
 import ReactDOM from "react-dom";
+import Calendar from './pages/Calendar';
+import ErrorBoundary from "./components/general/ErrorBoundary";
 
-const App = () => {
-  return (
-    <div>
-      <p>Test application</p>
-    </div>
-  );
-};
+class App extends Component {
+  constructor(props) {
+    super(props);
+    const config = require('Config');
+    this.state = {
+      'config': config
+    };
+  }
 
-export default App;
+  render() {
+    return (
+      <ErrorBoundary>
+        <Calendar stations={this.state.config.stations} />
+      </ErrorBoundary>
+    );
+  }
+}
 
-ReactDOM.render(<App />, document.getElementById('app'));
+//export default App;
+ReactDOM.render(<App />, document.getElementById('calendar'));

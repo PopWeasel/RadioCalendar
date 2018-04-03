@@ -1,32 +1,33 @@
 # RadioCalendar
 Calendar viewer
 
-Dev notes
+## Dev notes
 
-npm init -y
-
-npm i webpack --save-dev
-
-npm i webpack-cli --save-dev
-
-mkdir src
-add following to package.json
+* npm init -y
+* npm i webpack --save-dev
+* npm i webpack-cli --save-dev
+* mkdir src
+* add following to package.json
+```
 "scripts": {
   "dev": "webpack --mode development
   "build": "webpack --mode production"
 }
+```
+* npm i babel-core babel-loader babel-preset-env --save-dev
 
-npm i babel-core babel-loader babel-preset-env --save-dev
-
-create .babelrc
+* create .babelrc
+```
 {
     "presets": [
         "env",
         "react"
     ]
 }
+```
 
-create webpack.config.js
+* create webpack.config.js
+```
 module.exports = {
   module: {
     rules: [
@@ -40,11 +41,12 @@ module.exports = {
     ]
   }
 };
+```
+* npm i react react-dom babel-preset-react --save-dev
+* npm i html-webpack-plugin html-loader --save-dev
 
-npm i react react-dom babel-preset-react --save-dev
-npm i html-webpack-plugin html-loader --save-dev
-
-edit webpack config
+* edit webpack config
+```
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 module.exports = {
   module: {
@@ -74,8 +76,10 @@ module.exports = {
     })
   ]
 };
+```
 
-create react App.js
+* create react App.js
+```
 import React from "react";
 import ReactDOM from "react-dom";
 const App = () => {
@@ -87,11 +91,12 @@ const App = () => {
 };
 export default App;
 ReactDOM.render(<App />, document.getElementById("app"));
-
-add following to ser/index.js
+```
+* add following to src/index.js
 import App from "./App";
 
-create src/index.HtmlWebPackPlugin<!DOCTYPE html>
+* create src/index.HtmlWebPackPlugin<!DOCTYPE html>
+```
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -111,8 +116,13 @@ create src/main.css
 body {
     line-height: 2;
 }
+```
 
-npm i webpack-dev-server --save-dev
+* npm i webpack-dev-server --save-dev
 
-add following 'scripts' section in package.json
+* add following 'scripts' section in package.json
 "start": "webpack-dev-server --mode development --open"
+
+* npm i webpack-dev-server html-webpack-plugin mini-css-extract-plugin html-loader babel-core babel-loader babel-preset-env babel-preset-react mini-css-extract-plugin css-loader -save-dev
+
+* npm run start
