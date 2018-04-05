@@ -14,9 +14,9 @@ class App extends Component {
 
   render() {
     return (
-      <ErrorBoundary>
-        <Calendar stations={this.state.config.stations} />
-      </ErrorBoundary>
+        <ErrorBoundary>
+          <Calendar stations={this.state.config.stations} />
+        </ErrorBoundary>
     );
   }
 }
