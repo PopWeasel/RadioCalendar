@@ -13,11 +13,13 @@ class Calendar extends Component {
     this.state = {
       stations: this.props.stations,
       selectedStation: this.props.stations[0],
-      selectedDate: lastWeekDate
+      selectedDate: lastWeekDate,
+      selectedEvents: []
     };
 
     this.onStationChange = this.onStationChange.bind(this);
     this.onDateChange = this.onDateChange.bind(this);
+    this.onEventsChange = this.onEventsChange.bind(this);
   }
 
   onDateChange(selectedDate) {
@@ -30,19 +32,25 @@ class Calendar extends Component {
     this.setState({selectedStation: selectedStation});
   }
 
+  onEventsChange(events) {
+    this.setState({selectedEvents: events});
+  }
+
   render() {
     return(
       <div>
         <StationList
           stations={this.state.stations}
           selectedStation={this.state.selectedStation}
-          onStationChange={this.onStationChange}/>
-
+          onStationChange={this.onStationChange} />
         <DateSelector
           selectedDate={this.state.selectedDate}
-          onDateChange={this.onDateChange}
-        />
-        <Week selectedStation={this.state.selectedStation} selectedDate={this.state.selectedDate} />
+          onDateChange={this.onDateChange} />
+        <Week
+          selectedStation={this.state.selectedStation}
+          selectedDate={this.state.selectedDate}
+          selectedEvents={this.state.selectedEvents}
+          onEventsChange={this.onEventsChange} />
       </div>
     );
   }
