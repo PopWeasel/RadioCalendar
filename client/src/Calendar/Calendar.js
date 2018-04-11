@@ -1,8 +1,8 @@
 import React, {Component} from "react";
 import ReactDOM from "react-dom";
-import Week from "../components/calendar/Week";
-import StationList from "../components/station/StationList";
-import DateSelector from "../components/calendar/DateSelector";
+import Week from "./schedule/Week";
+import StationList from "./station/StationList";
+import DateSelector from "./date/DateSelector";
 import moment from "moment";
 
 class Calendar extends Component {

@@ -38,6 +38,6 @@ module.exports = {
     })
   ],
   externals: {
-    'Config': JSON.stringify(require('./config/app-config.json'))
+    'Config': JSON.stringify(require('../config/app-config.json'))
   }
 };

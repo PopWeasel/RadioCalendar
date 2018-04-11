@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import ReactDOM from "react-dom";
-import Calendar from './pages/Calendar';
-import ErrorBoundary from "./components/general/ErrorBoundary";
+import Calendar from './Calendar/Calendar';
+import ErrorBoundary from "./components/ErrorBoundary";
 
 class App extends Component {
   constructor(props) {
