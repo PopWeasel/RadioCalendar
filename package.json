@@ -1,0 +1,7 @@
+{
+  "name": "RadioCalendar",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "concurrently --kill-others \"cd server && node server.js\" \"cd client && npm start\""
+  }
+}
