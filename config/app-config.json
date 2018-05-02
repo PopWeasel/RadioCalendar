@@ -16,6 +16,7 @@
     }
   ],
   "client": {
+    "proxy": "localhost",
     "port": 8000
   },
   "server": {

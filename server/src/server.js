@@ -9,6 +9,7 @@ fs.readFile(configFile, function(err, data){
   }
 
   const config = JSON.parse(data.toString());
+  app.locals.config = config;
   const server = app.listen(config.server.port, function(){
     console.log("Express server listening on port " + config.server.port);
   });
