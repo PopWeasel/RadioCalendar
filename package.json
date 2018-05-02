@@ -2,6 +2,9 @@
   "name": "RadioCalendar",
   "version": "1.0.0",
   "scripts": {
-    "start": "concurrently --kill-others \"cd server && npm start 3000\" \"cd client && npm start\""
+    "start": "concurrently --kill-others \"cd server && CONFIG=../config/app-config.json npm start\" \"cd client && npm start\""
+  },
+  "dependencies": {
+    "concurrently": "^3.5.1"
   }
 }
