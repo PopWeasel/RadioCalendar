@@ -2,7 +2,7 @@ const app = require("./CalendarApp");
 const argv = require('yargs').argv;
 const fs = require('fs');
 
-const configFile = argv.config || "../config/app-config.js";
+const configFile = argv.config || "wibble"; //"../config/app-config.json";
 fs.readFile(configFile, function(err, data){
   if (err) {
     throw err;
