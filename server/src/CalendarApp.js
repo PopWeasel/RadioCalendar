@@ -14,12 +14,16 @@ app.get('/', function(req, res) {
 
 app.get("/station/:station/year/:year/week/:weekOfYear", function(req, res) {
   const availableStations = app.locals.config.stations;
-  const selectedStation = req.params.station;
+  const stationKey = req.params.station;
+  const selectedStations = availableStations.filter(element => {return element.key == stationKey});
+  const selectedStation = selectedStations[0];
   const year = req.params.year;
   const week = req.params.weekOfYear;
-  console.log(`${selectedStation} => ${year}:${week}`);
+  let url = selectedStation.week;
+  url = url.replace(/YEAR/, year);
+  url = url.replace(/WEEK_OF_YEAR/, week);
   const data =  {
-      "events": [1,2,3,4,5,6,7,8]
+      "events": [url]
   }
 
   res.json(data);
