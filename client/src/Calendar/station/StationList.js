@@ -6,9 +6,17 @@ class StationList extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-
   handleChange(event) {
+    console.log("Change" + event);
     this.props.onStationChange(event.target.value);
+  }
+
+  componentDidMount() {
+
+  }
+
+  componentWillUnmount() {
+
   }
 
   render() {
