@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import moment from 'moment';
+import isEqual from 'lodash';
 
 class Week extends Component {
   constructor(props) {
@@ -8,27 +9,16 @@ class Week extends Component {
     const config = require('Config');
 
     const date = moment(this.props.selectedDate);
-    const year = date.format("YYYY");
-    const weekOfYear = date.format("ww");
-    const displayDate = date.format("DD/MM/YY");
-    const selectedStation = this.props.selectedStation;
-
-    //const server = this.state.config.client.proxy;
-    //const port = this.state.config.server.port;
-    const server = config.client.proxy;
-    const port = config.server.port;
-    const url = `http://${server}:${port}/station/${selectedStation.key}/year/${year}/week/${weekOfYear}`;
+    const station = this.props.selectedStation;
+    const selectedEvents = this.props.selectedEvents;
 
     this.state =  {
       config: config,
       events: [],
       days: [],
+      selectedEvents: selectedEvents,
       date: date,
-      year: year,
-      weekOfYear: weekOfYear,
-      displayDate: displayDate,
-      selectedStation: selectedStation,
-      url: url
+      station: station
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -39,17 +29,54 @@ class Week extends Component {
   }
 
   componentDidMount() {
-    fetch(this.state.url)
+    this.fetchData();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    this.fetchData();
+  }
+
+  componentWillUnmount() {
+    if (this._controller) {
+      this._controller.abort();
+    }
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const nextDate = moment(nextProps.selectedDate);
+    if (!isEqual(nextDate, prevState.date)
+          || nextProps.selectedStation != prevState.station) {
+      return {
+        date: nextDate,
+        station: nextProps.selectedStation
+      }
+    }
+    return null;
+  }
+
+  fetchData() {
+    this._controller = new AbortController()
+    const signal = this._controller.signal
+    const url = this.generateURL();
+    fetch(url, {method: 'get', signal})
       .then(response => response.json())
       .then(data => this.setState({events: data.events}));
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    console.log(nextProps);
-    console.log(prevState);
+  generateURL() {
+    const date = moment(this.state.date);
+    const station = this.state.station;
+
+    const year = date.format("YYYY");
+    const weekOfYear = date.format("ww");
+    const server = this.state.config.client.proxy;
+    const port = this.state.config.server.port;
+    //const url = `http://${server}:${port}/station/${station.key}/year/${year}/week/${weekOfYear}`;
+    const url = `http://${server}:${port}/station/${station.key}/year/${year}/week/${weekOfYear}`;
+    return url;
   }
   render() {
-    const date = moment(this.props.selectedDate);
+    const date = moment(this.state.selectedDate);
     const weekOfYear = date.format("ww");
     const year = date.format("YYYY");
     const displayDate = date.format("DD/MM/YY");
@@ -68,7 +95,7 @@ class Week extends Component {
           Week of year : {weekOfYear}
         </div>
         <div>
-          Events : {this.props.selectedEvents}
+          Events : {this.state.selectedEvents}
         </div>
         <div>
           All Events : {this.state.events}
