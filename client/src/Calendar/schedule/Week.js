@@ -33,7 +33,10 @@ class Week extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    this.fetchData();
+    if (!isEqual(prevState.date, this.state.date)
+        || this.state.station.key != prevState.station.key) {
+      this.fetchData();
+    }
   }
 
   componentWillUnmount() {
@@ -42,10 +45,11 @@ class Week extends Component {
     }
   }
 
+
   static getDerivedStateFromProps(nextProps, prevState) {
     const nextDate = moment(nextProps.selectedDate);
     if (!isEqual(nextDate, prevState.date)
-          || nextProps.selectedStation != prevState.station) {
+          || nextProps.selectedStation.key != prevState.station.key) {
       return {
         date: nextDate,
         station: nextProps.selectedStation
