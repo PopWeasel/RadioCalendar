@@ -4,7 +4,15 @@ const util = require('util');
 const app = require('../CalendarApp');
 
 class ScheduleParser {
-  fetchSchedule(url) {
+
+  getWeek(config, station, year, week) {
+    let url = station.week;
+    url = url.replace(/YEAR/, year);
+    url = url.replace(/WEEK_OF_YEAR/, week);
+
+  }
+
+  _fetchSchedule(url) {
     const prom = fetch(url)
       .then(function(response){return response.text()})
       .then(function(value) {

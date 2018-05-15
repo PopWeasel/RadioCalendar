@@ -1,3 +1,4 @@
 #ignore webpack and node dirs
 dist
 node_modules
+cache

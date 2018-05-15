@@ -21,6 +21,6 @@
   },
   "server": {
     "port": 3000,
-    "cacheLocation": "cache"
+    "cacheLocation": "../cache"
   }
 }
