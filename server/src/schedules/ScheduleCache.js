@@ -4,11 +4,11 @@ const fs = require('fs-extra');
 class ScheduleParser {
   static isWeekCached(config, station, week, year) {
     const cachePath = ScheduleParser._getCacheFilename(config, station, week ,year);
-    fs.pathExists(cachePath)
+    return fs.pathExists(cachePath)
       .then(exists => {return exists});
   }
 
-  static setWeek(cacheLocation, station, week, year, data) {
+  static setWeek(config, station, week, year, data) {
     const cachePath = ScheduleParser._getCacheFilename(config, station, week ,year);
     fs.outputJson(cachePath, data)
       .then(() => {return})
@@ -17,8 +17,9 @@ class ScheduleParser {
       });
   };
 
-  static getWeek(cacheLocation, station, week, year) {
+  static getWeek(config, station, week, year) {
     const cachePath = ScheduleParser._getCacheFilename(config, station, week ,year);
+
     const events = [];
     return events;
   };

@@ -9,16 +9,11 @@ class EventFetcher {
     const selectedStation = selectedStations[0];
     let events = selectedStation;
     if (ScheduleCache.isWeekCached(config, selectedStation, year, week)) {
-      //events = ScheduleCache.getWeek(config, selectedStation, year, week);
+      events = ScheduleCache.getWeek(config, selectedStation, year, week);
     } else {
-      //events = ScheduleParser.getWeek(config, selectedStation, year, week);
+      events = ScheduleParser.getWeek(selectedStation, year, week);
+      //ScheduleCache.setWeek(config, selectedStation, year, week, events);
     }
-    let url = selectedStation.week;
-    url = url.replace(/YEAR/, year);
-    url = url.replace(/WEEK_OF_YEAR/, week);
-
-    const date = moment().day("Monday").year(year).week(week).toDate();
-    console.log(date);
     return events;
   }
 }

@@ -5,24 +5,36 @@ const app = require('../CalendarApp');
 
 class ScheduleParser {
 
-  getWeek(config, station, year, week) {
+  static getWeek(station, week, year) {
     let url = station.week;
     url = url.replace(/YEAR/, year);
     url = url.replace(/WEEK_OF_YEAR/, week);
-
+    const promise = ScheduleParser._fetchSchedule(url);
+    promise.then(body => {ScheduleParser._parseBody(body);})
+      .then(events => console.log(events));
+    return promise;
   }
 
-  _fetchSchedule(url) {
-    const prom = fetch(url)
-      .then(function(response){return response.text()})
-      .then(function(value) {
-        const data =  {
-            "events": [url],
-            "response": value
-      }
-      response.json(data);
-    });
+
+  static _fetchSchedule(url) {
+    return fetch(url)
+      .then(response => {
+        if (response.status === 200) {
+          return response.text();
+        } else {
+          throw(`URL fetch status: {$response.status} url: {$url}`);
+        }
+      })
+      .catch(err => {
+        console.error("Error: " + err);
+      });
   }
+
+  static _parseBody(body) {
+    const events = [];
+
+    return events;
+  }
+
 }
-
 module.exports = ScheduleParser;
