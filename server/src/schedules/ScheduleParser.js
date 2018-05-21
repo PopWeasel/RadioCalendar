@@ -31,8 +31,7 @@ class ScheduleParser {
   }
 
   static _parseBody(body) {
-    const events = [];
-
+    const events = ['parsed'];
     return events;
   }
 
