@@ -9,8 +9,11 @@ class ScheduleParser {
     let url = station.week;
     url = url.replace(/YEAR/, year);
     url = url.replace(/WEEK_OF_YEAR/, week);
-    const promise = ScheduleParser._fetchSchedule(url);
-    promise.then(body => {ScheduleParser._parseBody(body);})
+    const promise = ScheduleParser._fetchSchedule(url)
+      .then(body => {
+        const events = ScheduleParser._parseBody(body);
+        return events;
+      })
       .then(events => console.log(events));
     return promise;
   }
@@ -31,7 +34,7 @@ class ScheduleParser {
   }
 
   static _parseBody(body) {
-    const events = ['parsed'];
+    const events = ['parsed', 'eventlist'];
     return events;
   }
 

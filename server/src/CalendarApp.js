@@ -18,12 +18,14 @@ app.get("/station/:station/year/:year/week/:weekOfYear", (req, res) => {
   const year = req.params.year;
   const week = req.params.weekOfYear;
 
-  const events = EventFetcher.getWeek(app.locals.config, stationKey, week, year);
+  const eventPromise = EventFetcher.getWeek(app.locals.config, stationKey, week, year);
+  eventPromise.then(events => {
+    const data =  {
+        "events": [events]
+    }
+    res.json(data);
+  });
 
-  const data =  {
-      "events": [events]
-  }
-  res.json(data);
 });
 
 module.exports = app;
