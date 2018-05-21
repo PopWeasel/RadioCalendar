@@ -4,15 +4,17 @@ const util = require('util');
 const app = require('../CalendarApp');
 const fs = require('fs-extra');
 const path = require('path');
+const jsdom = require('jsdom');
+const { JSDOM } = jsdom;
 
 class ScheduleParser {
   constructor(cacheDir) {
-    console.log(`ScheduleParser(${cacheDir})`);
+    //console.log(`ScheduleParser(${cacheDir})`);
     this.cache = new ScheduleCache(cacheDir);
   }
 
   async getWeek(station, year, week) {
-    console.log(`getWeek(${station}, ${year}, ${week})`);
+    //console.log(`getWeek(${station}, ${year}, ${week})`);
     let url = station.week;
     url = url.replace(/YEAR/, year);
     url = url.replace(/WEEK_OF_YEAR/, week);
@@ -27,12 +29,12 @@ class ScheduleParser {
       }
     }
 
-    const events = await ScheduleParser._parseBody(data);
+    const events = this._parseBody(data);
     return events;
   }
 
   async _fetchSchedule(url) {
-    console.log(`_fetchSchedule(${url}`);
+    //console.log(`_fetchSchedule(${url}`);
     const response = await fetch(url);
     if (response.status == 200) {
       const text = await response.text();
@@ -42,20 +44,33 @@ class ScheduleParser {
     }
   }
 
-  static _parseBody(body) {
-    const events = ['parsed', 'eventlist'];
-    return events;
+  async _parseBody(html) {
+    return new Promise((resolve, reject) => {
+      console.log(`_parseBody()`);
+      const dom = new JSDOM(html);
+      for (let dayNum of Array.from(Array(7).keys())) {
+        const elements = dom.window.document.querySelectorAll(`.day-${dayNum}`);
+        console.log(`Day ${dayNum} => ${elements}`);
+      }
+      const events = ['parsed', 'eventlist'];
+      if (events.length > 0) {
+        resolve(events);
+      } else {
+        reject("No events in body");
+      }
+
+    });
   }
 }
 
 class ScheduleCache {
   constructor(cacheDir) {
-    console.log(`ScheduleCache(${cacheDir}`);
+    //console.log(`ScheduleCache(${cacheDir}`);
     this.cacheDir = cacheDir;
   }
 
   async getCached(station, year, week) {
-    console.log(`getCached(${station}, ${year}, ${week})`);
+    //console.log(`getCached(${station}, ${year}, ${week})`);
     const filename = this._getCacheFilename(station, year, week);
     if (await fs.pathExists(filename)) {
       const body = await fs.readFile(filename);
@@ -64,7 +79,7 @@ class ScheduleCache {
   }
 
   async setCache(data, station, year, week) {
-    console.log(`setCache(${station}, ${year}, ${week})`);
+    //console.log(`setCache(${station}, ${year}, ${week})`);
     const filename = this._getCacheFilename(station, year, week);
     await fs.outputFile(filename, data);
   }
