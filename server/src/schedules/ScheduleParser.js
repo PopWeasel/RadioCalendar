@@ -20,18 +20,14 @@ class ScheduleParser {
     url = url.replace(/YEAR/, year);
     url = url.replace(/WEEK_OF_YEAR/, week);
 
-    let data = await this.cache.getCached(station, year, week);
-    if (data == null) {
-      data = await this._fetchSchedule(url);
-      if (data) {
-        await this.cache.setCache(data, station, year, week);
-      } else {
-        throw("Failed to fetch any data");
-      }
+    let timetable = await this.cache.getCached(station, year, week);
+    if (timetable == null) {
+      const data = await this._fetchSchedule(url);
+      timetable = await this._parseBody(data, year);
+      await this.cache.setCache(timetable, station, year, week);
     }
 
-    const events = this._parseBody(data, year);
-    return events;
+    return timetable;
   }
 
   async _fetchSchedule(url) {
@@ -50,10 +46,11 @@ class ScheduleParser {
       console.log(`_parseBody()`);
       const timetable = {
         days: [],
-        events: {}
+        events: []
       }
       const dom = new JSDOM(html);
       for (let dayNum of Array.from(Array(7).keys())) {
+        timetable.events[dayNum] = [];
         const elements = dom.window.document.querySelectorAll(`.day-${dayNum}`);
         for (let element of elements) {
           //console.log(`Day ${dayNum} => ${element.nodeName}`);
@@ -95,7 +92,7 @@ class ScheduleParser {
                 total = "";
                 episode = "";
               }
-              console.log(`${mainTitle} => ${synopsis}`);
+              //console.log(`${mainTitle} => ${synopsis}`);
               const event = {
                 start: moment(start),
                 end: moment(end),
@@ -107,7 +104,7 @@ class ScheduleParser {
                 total: total,
                 synopsis: synopsis
               };
-              timetable.events.dayNum.push(event);
+              timetable.events[dayNum].push(event);
             }
 
           }
@@ -133,19 +130,21 @@ class ScheduleCache {
     //console.log(`getCached(${station}, ${year}, ${week})`);
     const filename = this._getCacheFilename(station, year, week);
     if (await fs.pathExists(filename)) {
-      const body = await fs.readFile(filename);
-      return body;
+      const data = await fs.readFile(filename);
+      const timetable = JSON.parse(data);
+      return timetable;
     }
   }
 
-  async setCache(data, station, year, week) {
+  async setCache(timetable, station, year, week) {
     //console.log(`setCache(${station}, ${year}, ${week})`);
     const filename = this._getCacheFilename(station, year, week);
+    const data = await JSON.stringify(timetable, null, 2);
     await fs.outputFile(filename, data);
   }
 
   _getCacheFilename(station, week, year) {
-    let cachePath = path.join(this.cacheDir, `${station.key}_${year}_${week}.html`);
+    let cachePath = path.join(this.cacheDir, `${station.key}_${year}_${week}.json`);
     cachePath = path.resolve(cachePath);
     console.log(`_getCacheFilename() => ${cachePath}`);
     return cachePath;

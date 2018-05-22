@@ -63,8 +63,12 @@ class Week extends Component {
     const signal = this._controller.signal
     const url = this.generateURL();
     fetch(url, {method: 'get', signal})
-      .then(response => response.json())
-      .then(data => this.setState({events: data.events}));
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        this.setState({events: data});
+      });
   }
 
   generateURL() {
@@ -79,11 +83,13 @@ class Week extends Component {
     const url = `http://${server}:${port}/station/${station.key}/year/${year}/week/${weekOfYear}`;
     return url;
   }
+
   render() {
     const date = moment(this.state.selectedDate);
     const weekOfYear = date.format("ww");
     const year = date.format("YYYY");
     const displayDate = date.format("DD/MM/YY");
+    const  events = this.state.events;
     return (
       <div>
         <div>
@@ -102,7 +108,7 @@ class Week extends Component {
           Events : {this.state.selectedEvents}
         </div>
         <div>
-          All Events : {this.state.events}
+          Event: {events.days}
         </div>
 
       </div>
