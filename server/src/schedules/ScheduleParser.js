@@ -76,8 +76,10 @@ class ScheduleParser {
               const end = entryTimeElement.querySelector("meta").getAttribute("content")
 
               const entryDetails = entry.querySelector(".programme__titles");
+
               const mainTitleSpan = entryDetails.querySelector(".programme__title");
               const mainTitle = mainTitleSpan.querySelector('span').innerHTML;
+
               const subTitleSpan = entryDetails.querySelector(".programme__subtitle");
               let subTitle = "";
               if (subTitleSpan != null) {
@@ -85,14 +87,25 @@ class ScheduleParser {
               }
               const eventURL = entryDetails.querySelector("a").href;
               const pid = eventURL.split("/").pop();
-              console.log(`${mainTitle} => ${pid}`);
+
+              const synopsisElement = entry.querySelector(".programme__synopsis");
+              let synopsis, episode, total = "";
+              if (synopsisElement != null) {
+                synopsis = synopsisElement.querySelector("span").innerHTML;
+                total = "";
+                episode = "";
+              }
+              console.log(`${mainTitle} => ${synopsis}`);
               const event = {
                 start: moment(start),
                 end: moment(end),
                 title: mainTitle,
                 subTitle: subTitle,
                 url: eventURL,
-                pid: pid
+                pid: pid,
+                episode: episode,
+                total: total,
+                synopsis: synopsis
               };
               timetable.events.dayNum.push(event);
             }
