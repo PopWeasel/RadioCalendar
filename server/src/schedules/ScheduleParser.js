@@ -6,6 +6,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
+const moment = require('moment');
 
 class ScheduleParser {
   constructor(cacheDir) {
@@ -29,7 +30,7 @@ class ScheduleParser {
       }
     }
 
-    const events = this._parseBody(data);
+    const events = this._parseBody(data, year);
     return events;
   }
 
@@ -44,17 +45,63 @@ class ScheduleParser {
     }
   }
 
-  async _parseBody(html) {
+  async _parseBody(html, year) {
     return new Promise((resolve, reject) => {
       console.log(`_parseBody()`);
+      const timetable = {
+        days: [],
+        events: {}
+      }
       const dom = new JSDOM(html);
       for (let dayNum of Array.from(Array(7).keys())) {
         const elements = dom.window.document.querySelectorAll(`.day-${dayNum}`);
-        console.log(`Day ${dayNum} => ${elements}`);
+        for (let element of elements) {
+          //console.log(`Day ${dayNum} => ${element.nodeName}`);
+          if (element.nodeName === "TH") {
+            const day = element.querySelector('.date-list__item-line1').innerHTML;
+            const dayMonth = element.querySelector('.date-list__item-line2').innerHTML;
+            try {
+              const date = moment(`${dayMonth} ${year}`, "D MMMM YY");
+              timetable.days[dayNum] = date;
+              timetable.events.dayNum = [];
+            } catch(err) {
+              console.log(`ERROR ${err}: ${dayNum} => ${dayMonth}`);
+              raise(err);
+            }
+          } else if (element.nodeName === "TD") {
+            const entries = element.querySelectorAll(".week-guide__table__item");
+            for (let entry of entries) {
+              const entryTimeElement = entry.querySelector(".broadcast__info");
+              const start = entryTimeElement.querySelector(".broadcast__time").getAttribute("content");
+              const end = entryTimeElement.querySelector("meta").getAttribute("content")
+
+              const entryDetails = entry.querySelector(".programme__titles");
+              const mainTitleSpan = entryDetails.querySelector(".programme__title");
+              const mainTitle = mainTitleSpan.querySelector('span').innerHTML;
+              const subTitleSpan = entryDetails.querySelector(".programme__subtitle");
+              let subTitle = "";
+              if (subTitleSpan != null) {
+                subTitle = subTitleSpan.querySelector('span').innerHTML;
+              }
+              const eventURL = entryDetails.querySelector("a").href;
+              const pid = eventURL.split("/").pop();
+              console.log(`${mainTitle} => ${pid}`);
+              const event = {
+                start: moment(start),
+                end: moment(end),
+                title: mainTitle,
+                subTitle: subTitle,
+                url: eventURL,
+                pid: pid
+              };
+              timetable.events.dayNum.push(event);
+            }
+
+          }
+        }
       }
-      const events = ['parsed', 'eventlist'];
-      if (events.length > 0) {
-        resolve(events);
+      if (timetable != null) {
+        resolve(timetable);
       } else {
         reject("No events in body");
       }
