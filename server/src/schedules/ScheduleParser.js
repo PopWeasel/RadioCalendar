@@ -78,24 +78,34 @@ class ScheduleParser {
               const entryDetails = entry.querySelector(".programme__titles");
 
               const mainTitleSpan = entryDetails.querySelector(".programme__title");
-              const mainTitle = mainTitleSpan.querySelector('span').innerHTML;
+              const mainTitle = mainTitleSpan.querySelector('span').textContent;
 
               const subTitleSpan = entryDetails.querySelector(".programme__subtitle");
               let subTitle = "";
               if (subTitleSpan != null) {
-                subTitle = subTitleSpan.querySelector('span').innerHTML;
+                subTitle = subTitleSpan.querySelector('span').textContent;
               }
               const eventURL = entryDetails.querySelector("a").href;
               const pid = eventURL.split("/").pop();
 
               const synopsisElement = entry.querySelector(".programme__synopsis");
-              let synopsis, episode, total = "";
+              let synopsis, episode, total;
               if (synopsisElement != null) {
-                synopsis = synopsisElement.querySelector("span").innerHTML;
-                total = "";
-                episode = "";
+                synopsis = synopsisElement.querySelector("span").textContent;
+                const episodeElement = synopsisElement.querySelector("abbr");
+                if (episodeElement != null) {
+                  const numElement = episodeElement.querySelector("span");
+                  if (numElement != null) {
+                    episode = numElement.textContent;
+                  }
+                  const totalElement = episodeElement.querySelector(".programme__groupsize");
+                  if (totalElement != null) {
+                    total = totalElement.textContent;
+                  }
+                  console.log(`${mainTitle} => ${total} ${episode}`);
+
+                }
               }
-              console.log(`${mainTitle} => ${synopsis}`);
               const event = {
                 start: moment(start),
                 end: moment(end),
