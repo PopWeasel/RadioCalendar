@@ -3,6 +3,8 @@ import ReactDOM from "react-dom";
 import Calendar from './Calendar/Calendar';
 import ErrorBoundary from "./components/ErrorBoundary";
 
+import 'typeface-roboto'
+
 class App extends Component {
   constructor(props) {
     super(props);

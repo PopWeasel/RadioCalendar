@@ -10,6 +10,7 @@
     "concurrently": "^3.5.1"
   },
   "devDependencies": {
-    "nodemon": "^1.17.4"
+    "nodemon": "^1.17.4",
+    "url-loader": "^1.0.1"
   }
 }
