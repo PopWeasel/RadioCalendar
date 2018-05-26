@@ -10,13 +10,11 @@ class Week extends Component {
 
     const date = moment(this.props.selectedDate);
     const station = this.props.selectedStation;
-    const selectedEvents = this.props.selectedEvents;
 
     this.state =  {
       config: config,
       events: [],
       days: [],
-      selectedEvents: selectedEvents,
       date: date,
       station: station
     };
@@ -103,9 +101,6 @@ class Week extends Component {
         </div>
         <div>
           Week of year : {weekOfYear}
-        </div>
-        <div>
-          Events : {this.state.selectedEvents}
         </div>
         <div>
           Event: {events.days}
