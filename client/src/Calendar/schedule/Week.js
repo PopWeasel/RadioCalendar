@@ -28,7 +28,6 @@ class Week extends Component {
   componentDidUpdate(prevProps, prevState) {
     const currentDate = moment(this.state.date);
     const prevDate = moment(prevState.date);
-    console.log(`componentDidUpdate ${prevDate} == ${currentDate} => ${currentDate.isSame(prevDate)}`);
     if (!prevDate.isSame(currentDate)
         || this.state.station.key != prevState.station.key) {
       this.fetchData();
@@ -45,7 +44,6 @@ class Week extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     const nextDate = moment(nextProps.selectedDate);
     const prevDate = moment(prevState.date);
-    console.log(`getDerivedStateFromProps ${nextDate} == ${prevDate} => ${nextDate.isSame(prevDate)}`);
     if (!nextDate.isSame(prevDate)
           || nextProps.selectedStation.key != prevState.station.key) {
       return {
