@@ -99,7 +99,7 @@ class ScheduleParser {
                   if (totalElement != null) {
                     total = totalElement.textContent;
                   }
-                  console.log(`${mainTitle} => ${total} ${episode}`);
+                  //console.log(`${mainTitle} => ${total} ${episode}`);
 
                 }
               }

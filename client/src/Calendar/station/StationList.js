@@ -7,7 +7,6 @@ class StationList extends Component {
   }
 
   handleChange(event) {
-    console.log("Change" + event);
     this.props.onStationChange(event.target.value);
   }
 

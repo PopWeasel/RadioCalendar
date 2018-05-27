@@ -8,7 +8,7 @@ class Week extends Component {
     moment.locale('en-GB');
     const config = require('Config');
 
-    const date = moment(this.props.selectedDate);
+    const date = this.props.selectedDate;
     const station = this.props.selectedStation;
 
     this.state =  {
@@ -18,20 +18,18 @@ class Week extends Component {
       date: date,
       station: station
     };
-    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(event) {
-    console.log("Change" + event);
-    this.props.onEventsChange(event.target.value);
-  }
 
   componentDidMount() {
     this.fetchData();
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!isEqual(prevState.date, this.state.date)
+    const currentDate = moment(this.state.date);
+    const prevDate = moment(prevState.date);
+    console.log(`componentDidUpdate ${prevDate} == ${currentDate} => ${currentDate.isSame(prevDate)}`);
+    if (!prevDate.isSame(currentDate)
         || this.state.station.key != prevState.station.key) {
       this.fetchData();
     }
@@ -46,10 +44,12 @@ class Week extends Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     const nextDate = moment(nextProps.selectedDate);
-    if (!isEqual(nextDate, prevState.date)
+    const prevDate = moment(prevState.date);
+    console.log(`getDerivedStateFromProps ${nextDate} == ${prevDate} => ${nextDate.isSame(prevDate)}`);
+    if (!nextDate.isSame(prevDate)
           || nextProps.selectedStation.key != prevState.station.key) {
       return {
-        date: nextDate,
+        date: nextProps.selectedDate,
         station: nextProps.selectedStation
       }
     }
@@ -83,7 +83,7 @@ class Week extends Component {
   }
 
   render() {
-    const date = moment(this.state.selectedDate);
+    const date = moment(this.state.date);
     const weekOfYear = date.format("ww");
     const year = date.format("YYYY");
     const displayDate = date.format("DD/MM/YY");
