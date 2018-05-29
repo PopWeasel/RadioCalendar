@@ -7,6 +7,7 @@
     "dev": "concurrently --kill-others \"cd server && CONFIG=../config/app-config.json npm run dev\" \"cd client && npm run dev\""
   },
   "dependencies": {
+    "@material-ui/icons": "^1.0.0",
     "concurrently": "^3.5.1"
   },
   "devDependencies": {
