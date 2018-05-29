@@ -1,9 +1,13 @@
 import React, {Component} from "react";
 import ReactDOM from "react-dom";
+import moment from "moment";
+
+import Typography from '@material-ui/core/Typography';
+import withTheme from '@material-ui/core/styles/withTheme';
+
 import Week from "./schedule/Week";
 import StationList from "./station/StationList";
 import DateSelector from "./date/DateSelector";
-import moment from "moment";
 
 class Calendar extends Component {
   constructor(props) {
@@ -39,6 +43,9 @@ class Calendar extends Component {
   render() {
     return(
       <div>
+        <Typography variant="title">
+          Schedule
+        </Typography>
         <StationList
           stations={this.state.stations}
           selectedStation={this.state.selectedStation}
