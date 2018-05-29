@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import moment from 'moment';
 import isEqual from 'lodash';
 
+import Day from './Day';
+
 class Week extends Component {
   constructor(props) {
     super(props);
@@ -63,7 +65,10 @@ class Week extends Component {
         return response.json();
       })
       .then(data => {
-        this.setState({events: data});
+        this.setState({
+          days: data.days,
+          events: data.events
+        });
       });
   }
 
@@ -85,7 +90,13 @@ class Week extends Component {
     const weekOfYear = date.format("ww");
     const year = date.format("YYYY");
     const displayDate = date.format("DD/MM/YY");
-    const  events = this.state.events;
+
+    const days = [];
+    for(let i=0; i < this.state.days.length; i++) {
+      const day = this.state.days[i];
+      const events = this.state.events[i];
+      days.push(<Day day={day} events={events}></Day>);
+    }
     return (
       <div>
         <div>
@@ -100,9 +111,9 @@ class Week extends Component {
         <div>
           Week of year : {weekOfYear}
         </div>
-        <div>
-          Event: {events.days}
-        </div>
+        <ol>
+          {days}
+        </ol>
 
       </div>
     );
