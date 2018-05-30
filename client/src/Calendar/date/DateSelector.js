@@ -14,8 +14,16 @@ class DateSelector extends Component {
 
   handleChange(event) {
     const value = event.target.value;
+
     if (value) {
-      this.props.onDateChange(value);
+      const date = moment(value);
+      const now = moment();
+      if (date < now && date > now.subtract(10, "y")) {
+          this.props.onDateChange(value);
+      } else {
+        console.log(`Invalid date ${value} resetting to this week`);
+        this.props.onDateChange(now.startOf('isoWeek').format("YYYY-MM-DD"));
+      }
     }
   }
 

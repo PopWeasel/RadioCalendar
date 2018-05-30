@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import moment from 'moment';
 import isEqual from 'lodash';
 
+import Typography from '@material-ui/core/Typography';
+import withTheme from '@material-ui/core/styles/withTheme';
+
 import Day from './Day';
 
 class Week extends Component {
@@ -87,8 +90,7 @@ class Week extends Component {
   render() {
     const date = moment(this.state.date);
     const weekOfYear = date.format("ww");
-    const year = date.format("YYYY");
-    const displayDate = date.format("DD/MM/YY");
+    const displayDate = date.format("DD/MM/YYYY");
 
     const days = [];
     for(let i=0; i < this.state.days.length; i++) {
@@ -96,20 +98,10 @@ class Week extends Component {
       const events = this.state.events[i];
       days.push(<Day day={day} events={events}></Day>);
     }
+
     return (
       <div>
-        <div>
-          Station : {this.props.selectedStation.name}
-        </div>
-        <div>
-          Date : {displayDate}
-        </div>
-        <div>
-          Year : {year}
-        </div>
-        <div>
-          Week of year : {weekOfYear}
-        </div>
+        <Typography>Selected: {this.props.selectedStation.name} {displayDate} Week: {weekOfYear}</Typography>
         <ol>
           {days}
         </ol>
