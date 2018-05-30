@@ -10,7 +10,7 @@ class Week extends Component {
     moment.locale('en-GB');
     const config = require('Config');
 
-    const date = this.props.selectedDate;
+    const date = moment(this.props.selectedDate).startOf('isoWeek');
     const station = this.props.selectedStation;
 
     this.state =  {
@@ -28,8 +28,8 @@ class Week extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const currentDate = moment(this.state.date);
-    const prevDate = moment(prevState.date);
+    const currentDate = this.state.date;
+    const prevDate = prevState.date;
     if (!prevDate.isSame(currentDate)
         || this.state.station.key != prevState.station.key) {
       this.fetchData();
@@ -42,14 +42,13 @@ class Week extends Component {
     }
   }
 
-
   static getDerivedStateFromProps(nextProps, prevState) {
     const nextDate = moment(nextProps.selectedDate);
-    const prevDate = moment(prevState.date);
+    const prevDate = prevState.date;
     if (!nextDate.isSame(prevDate)
           || nextProps.selectedStation.key != prevState.station.key) {
       return {
-        date: nextProps.selectedDate,
+        date: nextDate.startOf('isoWeek'),
         station: nextProps.selectedStation
       }
     }
@@ -73,7 +72,7 @@ class Week extends Component {
   }
 
   generateURL() {
-    const date = moment(this.state.date);
+    const date = this.state.date;
     const station = this.state.station;
 
     const year = date.format("YYYY");

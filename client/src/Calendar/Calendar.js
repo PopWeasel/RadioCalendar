@@ -13,7 +13,7 @@ class Calendar extends Component {
   constructor(props) {
     super(props);
     moment.locale('en-GB')
-    const lastWeekDate = moment(moment().subtract(7, "days")).toDate();
+    const lastWeekDate = moment().startOf('isoWeek').toDate();
     this.state = {
       stations: this.props.stations,
       selectedStation: this.props.stations[0],

@@ -4,8 +4,9 @@ import moment from "moment";
 
 class Day extends Component {
   render() {
+    console.log(this.props.day);
     const date = moment(this.props.day);
-    const displayDate = date.format("DD/MM/YY");
+    const displayDate = date.format("ddd DD/MM/YYYY");
 
     return(<li>{displayDate}</li>);
   }

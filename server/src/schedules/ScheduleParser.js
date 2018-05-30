@@ -58,7 +58,8 @@ class ScheduleParser {
             const day = element.querySelector('.date-list__item-line1').innerHTML;
             const dayMonth = element.querySelector('.date-list__item-line2').innerHTML;
             try {
-              const date = moment(`${dayMonth} ${year}`, "D MMMM YY");
+              //console.log(`Processing date ${dayMonth} ${year}`);
+              const date = moment(`${dayMonth} ${year}`, "D MMMM YYYY");
               timetable.days[dayNum] = date;
               timetable.events.dayNum = [];
             } catch(err) {
