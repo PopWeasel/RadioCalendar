@@ -1,5 +1,10 @@
 import React, {Component} from 'react';
-import Calendar from 'react-calendar';
+import moment from "moment";
+
+//import Calendar from 'react-calendar';
+
+import { withStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
 
 class DateSelector extends Component {
   constructor(props) {
@@ -12,8 +17,20 @@ class DateSelector extends Component {
   }
 
   render() {
-    const selectedDate = this.props.selectedDate;
-    return(<Calendar value={selectedDate} onChange={this.handleChange}/>);
+    const selectedDate = moment(this.props.selectedDate).format('YYYY-MM-DD');
+    console.log(`Selected data: ${selectedDate}`);
+    return(
+      <TextField
+        label="Select Week"
+        id="date"
+        type="date"
+        defaultValue={selectedDate}
+        InputLabelProps={{
+         shrink: true,
+        }}
+        onChange={this.handleChange}
+       />
+    );
   }
 }
 
