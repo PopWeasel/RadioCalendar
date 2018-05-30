@@ -12,13 +12,16 @@ class DateSelector extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(selectedDate) {
-    this.props.onDateChange(selectedDate);
+  handleChange(event) {
+    const value = event.target.value;
+    if (value) {
+      this.props.onDateChange(value);
+    }
   }
 
   render() {
     const selectedDate = moment(this.props.selectedDate).format('YYYY-MM-DD');
-    console.log(`Selected data: ${selectedDate}`);
+    console.log(`Selected date: ${selectedDate}`);
     return(
       <TextField
         label="Select Week"
