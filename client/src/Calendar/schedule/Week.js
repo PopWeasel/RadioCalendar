@@ -113,7 +113,6 @@ class Week extends Component {
         <ol>
           {days}
         </ol>
-
       </div>
     );
   }
