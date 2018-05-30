@@ -1,5 +1,13 @@
 import React, {Component} from 'react';
 
+import { withStyles } from '@material-ui/core/styles';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+//import FormHelperText from '@material-ui/core/FormHelperText';
+//import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+
 class StationList extends Component {
   constructor(props) {
     super(props);
@@ -21,16 +29,18 @@ class StationList extends Component {
   render() {
     const value = this.props.selectedStation.id;
     const stations = this.props.stations.map((station) =>
-    <option className="station" value={station.id} key={station.key} >
+    <MenuItem className="station" value={station.id} key={station.key} >
       {station.name}
-    </option>);
+    </MenuItem>);
     return (
-      <label>
-        Select a station&nbsp;
-        <select className="stations" onChange={this.handleChange} value={value}>
-          {stations}
-        </select>
-      </label>
+      <span>
+        <InputLabel>
+          Select a station&nbsp;
+        </InputLabel>
+        <Select className="stations" onChange={this.handleChange} value={value}>
+            {stations}
+        </Select>
+      </span>
     );
   }
 }
