@@ -96,13 +96,16 @@ class Week extends Component {
     for(let i=0; i < this.state.days.length; i++) {
       const day = this.state.days[i];
       const events = this.state.events[i];
-      days.push(<Day day={day} events={events}></Day>);
+      days.push(<Day day={day} events={events} column={i}></Day>);
     }
 
     return (
       <div>
         <Typography>Selected: {this.props.selectedStation.name} {displayDate} Week: {weekOfYear}</Typography>
-        <ol>
+        <ol style={
+            display: grid,
+
+          }>
           {days}
         </ol>
       </div>
