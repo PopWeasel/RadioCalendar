@@ -99,15 +99,20 @@ class Week extends Component {
       days.push(<Day day={day} events={events} column={i}></Day>);
     }
 
+    const timetableStyle = {
+      'display': 'inline-grid',
+      'grid-template-columns': '0.3fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr',
+      'justify-content': 'space-evenly',
+      'grid-gap': '10px',
+      'background-color': '#2196F3',
+      'padding': '10px',
+    };
     return (
-      <div>
+      <div >
         <Typography>Selected: {this.props.selectedStation.name} {displayDate} Week: {weekOfYear}</Typography>
-        <ol style={
-            display: grid,
-
-          }>
+        <div class="timetable" style={timetableStyle}>
           {days}
-        </ol>
+        </div>
       </div>
     );
   }
