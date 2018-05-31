@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import withTheme from '@material-ui/core/styles/withTheme';
 
 import Day from './Day';
+import Event from "./Event";
 
 class Week extends Component {
   constructor(props) {
@@ -92,26 +93,38 @@ class Week extends Component {
     const weekOfYear = date.format("ww");
     const displayDate = date.format("DD/MM/YYYY");
 
+    const timeline = [];
+    for (let i=0; i < 23; i++) {
+      timeline.push(<div>{i}</div>)
+    }
     const days = [];
+    const events = [];
     for(let i=0; i < this.state.days.length; i++) {
       const day = this.state.days[i];
-      const events = this.state.events[i];
-      days.push(<Day day={day} events={events} column={i}></Day>);
+      const dayEvents = this.state.events[i];
+
+      for(let j=0; j < dayEvents.length; j++) {
+        const event = dayEvents[j];
+        events.push(<Event column={i+2} event={event}></Event>);
+      }
+
+      days.push(<Day day={day} column={i+2} row={1}></Day>);
     }
 
     const timetableStyle = {
-      'display': 'inline-grid',
-      'grid-template-columns': '0.3fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr',
-      'justify-content': 'space-evenly',
-      'grid-gap': '10px',
-      'background-color': '#2196F3',
-      'padding': '10px',
+      display: 'inline-grid',
+      gridTemplateColumns: '0.3fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr',
+      justifyContent: 'space-evenly',
+      gridGap: '10px',
+      backgroundColor: '#2196F3',
+      padding: '10px',
     };
     return (
       <div >
         <Typography>Selected: {this.props.selectedStation.name} {displayDate} Week: {weekOfYear}</Typography>
-        <div class="timetable" style={timetableStyle}>
+        <div className="timetable" style={timetableStyle}>
           {days}
+          {events}
         </div>
       </div>
     );

@@ -5,23 +5,18 @@ import moment from "moment";
 import Typography from '@material-ui/core/Typography';
 import withTheme from '@material-ui/core/styles/withTheme';
 
-import Event from "./Event";
-
 class Day extends Component {
   render() {
     const date = moment(this.props.day);
     const displayDate = date.format("ddd DD/MM/YYYY");
-    const events = []
-    for (let e of this.props.events) {
-      events.push(<Event event={e}></Event>);
-    }
+    const style = {
+      gridColumn: this.props.column,
+      gridRow: this.props.row
+    };
     return(
-      <li>
+      <div style={style}>
         <Typography>{displayDate}</Typography>
-        <ul>
-          {events}
-        </ul>
-      </li>
+      </div>
     );
   }
 }
