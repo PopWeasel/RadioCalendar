@@ -17,8 +17,7 @@ class Event extends Component {
       endRow = 288;
     }
 
-    console.log(`${event.title} Times: ${start.format("HH:mm")} - ${end.format("HH:mm")} => ${startRow} - ${endRow}`);
-
+    //console.log(`${event.title} Times: ${start.format("HH:mm")} - ${end.format("HH:mm")} => ${startRow} - ${endRow}`);
     const style = {
       gridColumn: this.props.column,
       gridRowStart: startRow + offset,
