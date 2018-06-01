@@ -94,9 +94,19 @@ class Week extends Component {
     const displayDate = date.format("DD/MM/YYYY");
 
     const timeline = [];
-    for (let i=0; i < 23; i++) {
-      timeline.push(<div>{i}</div>)
+    for (let i=0; i < 24; i++) {
+      const hour = moment().hour(i).minute(0).format("HH:mm");
+      const startRow = i * (60/5) + 1;
+      const endRow = startRow + (60/5);
+      const style = {
+        gridColumn: 1,
+        gridRowStart: startRow,
+        gridRowEnd: endRow
+      };
+      timeline.push(<div style={style}>{hour}</div>)
     }
+
+    const offset = 2;
     const days = [];
     const events = [];
     for(let i=0; i < this.state.days.length; i++) {
@@ -105,10 +115,10 @@ class Week extends Component {
 
       for(let j=0; j < dayEvents.length; j++) {
         const event = dayEvents[j];
-        events.push(<Event column={i+2} event={event}></Event>);
+        events.push(<Event column={i+offset} event={event}></Event>);
       }
 
-      days.push(<Day day={day} column={i+2} row={1}></Day>);
+      days.push(<Day day={day} column={i+offset} row={1}></Day>);
     }
 
     const timetableStyle = {
@@ -116,13 +126,14 @@ class Week extends Component {
       gridTemplateColumns: '0.3fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr',
       justifyContent: 'space-evenly',
       gridGap: '10px',
-      backgroundColor: '#2196F3',
+      //backgroundColor: '#2196F3',
       padding: '10px',
     };
     return (
       <div >
         <Typography>Selected: {this.props.selectedStation.name} {displayDate} Week: {weekOfYear}</Typography>
         <div className="timetable" style={timetableStyle}>
+          {timeline}
           {days}
           {events}
         </div>

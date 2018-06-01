@@ -10,17 +10,19 @@ class Event extends Component {
     const event = this.props.event;
     const start = moment(event.start);
     const end = moment(event.end);
-    const startMinute = (start.hour() * 60) + start.minute() + 2;
-    let endMinute = (end.hour() * 60) + end.minute() + 2;
-    if (endMinute === 2) {
-      endMinute = 1440;
+    const offset = 2;
+    let startRow = Math.ceil(((start.hour() * 60) + start.minute()) / 5);
+    let endRow = Math.floor(((end.hour() * 60) + end.minute()) / 5);
+    if (endRow === 0) {
+      endRow = 288;
     }
-    console.log(`Start ${event.title} ${this.props.column} ${startMinute} - ${endMinute}`);
+
+    console.log(`${event.title} Times: ${start.format("HH:mm")} - ${end.format("HH:mm")} => ${startRow} - ${endRow}`);
 
     const style = {
       gridColumn: this.props.column,
-      gridRowStart: startMinute,
-      gridRowEnd: endMinute
+      gridRowStart: startRow + offset,
+      gridRowEnd: endRow + 1
     };
 
     return(
