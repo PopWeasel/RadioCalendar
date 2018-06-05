@@ -10,7 +10,7 @@ class Day extends Component {
     const date = moment(this.props.day);
     const displayDate = date.format("ddd DD/MM/YYYY");
     const style = {
-      gridColumn: this.props.column,
+      gridColumn: this.props.column + this.props.offset,
       gridRow: this.props.row
     };
     return(

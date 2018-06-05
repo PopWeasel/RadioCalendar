@@ -88,11 +88,7 @@ class Week extends Component {
     return url;
   }
 
-  render() {
-    const date = moment(this.state.date);
-    const weekOfYear = date.format("ww");
-    const displayDate = date.format("DD/MM/YYYY");
-
+  formatTimeline() {
     const timeline = [];
     for (let i=0; i < 24; i++) {
       const hour = moment().hour(i).minute(0).format("HH:mm");
@@ -105,22 +101,63 @@ class Week extends Component {
       };
       timeline.push(<div style={style}>{hour}</div>)
     }
+    return timeline;
+  }
 
+  formatData(days, events) {
     const offset = 2;
-    const days = [];
-    const events = [];
+    const eventLists = [];
+    const data = {
+      days: [],
+      events: []
+    };
     for(let i=0; i < this.state.days.length; i++) {
       const day = this.state.days[i];
       const dayEvents = this.state.events[i];
 
       for(let j=0; j < dayEvents.length; j++) {
         const event = dayEvents[j];
-        events.push(<Event column={i+offset} event={event}></Event>);
-      }
+        const start = moment(event.start);
+        const end = moment(event.end);
 
-      days.push(<Day day={day} column={i+offset} row={1}></Day>);
+        let startRow = Math.ceil(((start.hour() * 60) + start.minute()) / 5);
+        let endRow = Math.floor(((end.hour() * 60) + end.minute()) / 5);
+        if (endRow === 0) {
+          endRow = 288;
+        }
+        const eventIndex = i + (startRow * this.state.days.length);
+        if (eventLists[eventIndex] == null) {
+          eventLists[eventIndex] = [];
+        }
+        eventLists[eventIndex].push({
+          event: event,
+          col: i,
+          startRow: startRow,
+          endRow: endRow
+        });
+      }
+      data.days.push(<Day day={day} column={i} offset={offset} row={1}></Day>);
     }
 
+    for (let eventList of eventLists) {
+
+      if (eventList) {
+        //eventList.sort((a, b) => {return a.start.isBefore(b.start)});
+        data.events.push(<Event events={eventList} offset={offset}></Event>);
+      }
+
+    }
+    return data;
+  }
+
+  render() {
+    const date = moment(this.state.date);
+    const weekOfYear = date.format("ww");
+    const displayDate = date.format("DD/MM/YYYY");
+
+    const timeline = this.formatTimeline();
+
+    const formattedData = this.formatData(this.state.days, this.state.events);
     const timetableStyle = {
       display: 'inline-grid',
       gridTemplateColumns: '0.3fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr',
@@ -131,11 +168,11 @@ class Week extends Component {
     };
     return (
       <div >
-        <Typography>Selected: {this.props.selectedStation.name} {displayDate} Week: {weekOfYear}</Typography>
+        <Typography>Selected: {this.props.selectedStation.name} Week: {weekOfYear}</Typography>
         <div className="timetable" style={timetableStyle}>
           {timeline}
-          {days}
-          {events}
+          {formattedData.days}
+          {formattedData.events}
         </div>
       </div>
     );
