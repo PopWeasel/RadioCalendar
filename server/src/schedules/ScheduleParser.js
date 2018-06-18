@@ -89,10 +89,10 @@ class ScheduleParser {
               const synopsisElement = entry.querySelector(".programme__synopsis");
               let synopsis, episode, total;
               if (synopsisElement != null) {
-                synopsis = synopsisElement.querySelector("span").textContent;
+                synopsis = synopsisElement.querySelector("span:not([datatype]):not(.programme__groupsize) ").textContent;
                 const episodeElement = synopsisElement.querySelector("abbr");
                 if (episodeElement != null) {
-                  const numElement = episodeElement.querySelector("span");
+                  const numElement = episodeElement.querySelector("span[datatype]");
                   if (numElement != null) {
                     episode = numElement.textContent;
                   }
