@@ -11,7 +11,6 @@ import Select from '@material-ui/core/Select';
 class StationList extends Component {
   constructor(props) {
     super(props);
-    this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(event) {
@@ -37,7 +36,7 @@ class StationList extends Component {
         <InputLabel>
           Select a station&nbsp;
         </InputLabel>
-        <Select className="stations" onChange={this.handleChange} value={value}>
+        <Select className="stations" onChange={e => this.handleChange(e)} value={value}>
             {stations}
         </Select>
       </span>

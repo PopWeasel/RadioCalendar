@@ -9,7 +9,6 @@ import TextField from '@material-ui/core/TextField';
 class DateSelector extends Component {
   constructor(props) {
     super(props);
-    this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(event) {
@@ -39,7 +38,7 @@ class DateSelector extends Component {
         InputLabelProps={{
          shrink: true,
         }}
-        onChange={this.handleChange}
+        onChange={e => this.handleChange(e)}
        />
     );
   }
