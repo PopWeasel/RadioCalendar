@@ -11,7 +11,7 @@ class DateSelector extends Component {
     super(props);
   }
 
-  handleChange(event) {
+  handleChange = (event) => {
     const value = event.target.value;
 
     if (value) {
@@ -38,7 +38,7 @@ class DateSelector extends Component {
         InputLabelProps={{
          shrink: true,
         }}
-        onChange={e => this.handleChange(e)}
+        onChange={this.handleChange}
        />
     );
   }

@@ -20,23 +20,19 @@ class Calendar extends Component {
       selectedDate: lastWeekDate,
       selectedEvents: []
     };
-
-    this.onStationChange = this.onStationChange.bind(this);
-    this.onDateChange = this.onDateChange.bind(this);
-    this.onEventsChange = this.onEventsChange.bind(this);
   }
 
-  onDateChange(selectedDate) {
+  onDateChange = (selectedDate) => {
     this.setState({selectedDate: selectedDate});
   }
 
-  onStationChange(selectedStationId) {
+  onStationChange = (selectedStationId) => {
     const stations = this.state.stations;
     const selectedStation = stations[stations.findIndex(station => station.id === selectedStationId)];
     this.setState({selectedStation: selectedStation});
   }
 
-  onEventsChange(events) {
+  onEventsChange = (events) => {
     this.setState({selectedEvents: events});
   }
 

@@ -13,7 +13,7 @@ class StationList extends Component {
     super(props);
   }
 
-  handleChange(event) {
+  handleChange = (event) => {
     this.props.onStationChange(event.target.value);
   }
 
@@ -36,7 +36,7 @@ class StationList extends Component {
         <InputLabel>
           Select a station&nbsp;
         </InputLabel>
-        <Select className="stations" onChange={e => this.handleChange(e)} value={value}>
+        <Select className="stations" onChange={this.handleChange} value={value}>
             {stations}
         </Select>
       </span>
