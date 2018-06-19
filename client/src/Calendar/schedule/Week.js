@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import withTheme from '@material-ui/core/styles/withTheme';
 
 import Day from './Day';
-import Event from "./Event";
+import EventBox from "./EventBox";
 
 class Week extends Component {
   constructor(props) {
@@ -140,10 +140,9 @@ class Week extends Component {
     }
 
     for (let eventList of eventLists) {
-
       if (eventList) {
         //eventList.sort((a, b) => {return a.start.isBefore(b.start)});
-        data.events.push(<Event events={eventList} offset={offset}></Event>);
+        data.events.push(<EventBox events={eventList} offset={offset} selectedEvents={this.props.selectedEvents} onEventsChange={this.props.onEventsChange}></EventBox>);
       }
 
     }
