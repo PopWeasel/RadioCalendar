@@ -7,8 +7,12 @@ import withTheme from '@material-ui/core/styles/withTheme';
 class Event extends Component {
   constructor(props) {
     super(props);
+    let active = false;
+    if (this.props.event.id in this.props.selectedEvents) {
+      active = true;
+    }
     this.state = {
-      active: {}
+      active: active
     }
   }
 
@@ -16,8 +20,17 @@ class Event extends Component {
     console.log(`State {this.state.active}`);
     const active = this.state.active ? false : true;
     this.setState({
-      active: {}
+      active: active
     });
+    const selectedEvents = this.props.selectedEvents;
+    if (active) {
+      selectedEvents[event.pid] = event;
+    } else {
+      if (event.pid in selectedEvents) {
+        delete selectedEvents[event.pid];
+      }
+    }
+    this.props.onEventsChange(selectedEvents);
   };
 
   render() {
