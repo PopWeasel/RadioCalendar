@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import moment from "moment";
 import Typography from '@material-ui/core/Typography';
 import withTheme from '@material-ui/core/styles/withTheme';
+import styles from './Event.css';
 
 class Event extends Component {
   constructor(props) {
@@ -17,8 +18,8 @@ class Event extends Component {
   }
 
   toggleEventActive = (e, event) => {
-    console.log(`State {this.state.active}`);
     const active = this.state.active ? false : true;
+    console.log(`State ${this.state.active}`);
     this.setState({
       active: active
     });
@@ -30,6 +31,7 @@ class Event extends Component {
         delete selectedEvents[event.pid];
       }
     }
+    console.log(selectedEvents);
     this.props.onEventsChange(selectedEvents);
   };
 
@@ -47,9 +49,10 @@ class Event extends Component {
       episode = <Typography variant="body2">{event.episode}/{event.total}</Typography>
     }
     const pid = <Typography variant="body1">{event.pid}</Typography>;
-    //const className = this.state.active ? 'selected' : 'unselected';
+    const divStyle = this.state.active ? styles.selected : null;
+    console.log(`Style ${this.state.active} => ${divStyle}`);
     return(
-      <div onClick={e => this.toggleEventActive(e, event)}>
+      <div onClick={e => this.toggleEventActive(e, event)} className={divStyle}>
         {title}
         {subtitle}
         {episode}
