@@ -37,8 +37,10 @@ class Calendar extends Component {
     this.setState({selectedEvents: events});
   }
 
-  onListEventsClick = (event) => {
-    console.log("clicked");
+  onListEventsClick = (e) => {
+    for (const event of Object.keys(this.state.selectedEvents)) {
+      console.log(event);
+    }
   }
 
   render() {
