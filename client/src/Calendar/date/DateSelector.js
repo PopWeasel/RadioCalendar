@@ -28,7 +28,7 @@ class DateSelector extends Component {
 
   render() {
     const selectedDate = moment(this.props.selectedDate).format('YYYY-MM-DD');
-    console.log(`Selected date: ${selectedDate}`);
+    //console.log(`Selected date: ${selectedDate}`);
     return(
       <TextField
         label="Select Week"
