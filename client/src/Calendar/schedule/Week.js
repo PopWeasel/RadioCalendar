@@ -142,7 +142,9 @@ class Week extends Component {
     for (let eventList of eventLists) {
       if (eventList) {
         //eventList.sort((a, b) => {return a.start.isBefore(b.start)});
-        data.events.push(<EventBox events={eventList} offset={offset} selectedEvents={this.props.selectedEvents} onEventsChange={this.props.onEventsChange}></EventBox>);
+        data.events.push(<EventBox events={eventList} offset={offset}
+          selectedEvents={this.props.selectedEvents}
+          onEventsChange={this.props.onEventsChange}></EventBox>);
       }
 
     }
@@ -167,7 +169,7 @@ class Week extends Component {
     };
     return (
       <div >
-        <Typography>Selected: {this.props.selectedStation.name} Week: {weekOfYear}</Typography>
+        <Typography variant="headline">Selected: {this.props.selectedStation.name} Week: {weekOfYear}</Typography>
         <div className="timetable" style={timetableStyle}>
           {timeline}
           {formattedData.days}
