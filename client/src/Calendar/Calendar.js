@@ -4,6 +4,7 @@ import moment from "moment";
 
 import Typography from '@material-ui/core/Typography';
 import withTheme from '@material-ui/core/styles/withTheme';
+import Button from '@material-ui/core/Button';
 
 import Week from "./schedule/Week";
 import StationList from "./station/StationList";
@@ -18,7 +19,7 @@ class Calendar extends Component {
       stations: this.props.stations,
       selectedStation: this.props.stations[0],
       selectedDate: lastWeekDate,
-      selectedEvents: []
+      selectedEvents: {}
     };
   }
 
@@ -36,6 +37,10 @@ class Calendar extends Component {
     this.setState({selectedEvents: events});
   }
 
+  onListEventsClick = (event) => {
+    console.log("clicked");
+  }
+
   render() {
     return(
       <div>
@@ -49,6 +54,9 @@ class Calendar extends Component {
         <DateSelector
           selectedDate={this.state.selectedDate}
           onDateChange={this.onDateChange} />
+        <Button variant="raised" color="primary" onClick={this.onListEventsClick}>
+          Save selection
+        </Button>
         <Week
           selectedStation={this.state.selectedStation}
           selectedDate={this.state.selectedDate}
