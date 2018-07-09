@@ -69,6 +69,10 @@ class Week extends Component {
       })
       .then(data => {
         this.setState({
+          days: [],
+          events: []
+        });
+        this.setState({
           days: data.days,
           events: data.events
         });
