@@ -13,13 +13,16 @@ import DateSelector from "./date/DateSelector";
 class Calendar extends Component {
   constructor(props) {
     super(props);
-    moment.locale('en-GB')
+    moment.locale('en-GB');
+    this.WEEK = "week";
+    this.SELECTED_EVENTS = "selected";
     const lastWeekDate = moment().startOf('isoWeek').toDate();
     this.state = {
       stations: this.props.stations,
       selectedStation: this.props.stations[0],
       selectedDate: lastWeekDate,
-      selectedEvents: {}
+      selectedEvents: {},
+      viewData: this.WEEK
     };
   }
 
@@ -33,14 +36,26 @@ class Calendar extends Component {
     this.setState({selectedStation: selectedStation});
   }
 
-  onEventsChange = (events) => {
-    this.setState({selectedEvents: events});
+  onEventChange = (pid, event) => {
+    //using second form of setstate in order to access state
+    this.setState((prevState, props) => {
+      const selectedEvents = {...prevState.selectedEvents};
+      if (pid in selectedEvents && event == null) {
+        delete selectedEvents[pid];
+      } else {
+        selectedEvents[pid] = event;
+      }
+      return ({'selectedEvents': selectedEvents});
+    });
   }
 
   onListEventsClick = (e) => {
-    for (const event of Object.keys(this.state.selectedEvents)) {
-      console.log(event);
+    for (const pid of Object.keys(this.state.selectedEvents)) {
+      console.log(pid);
     }
+    this.setState({
+      viewData: this.SELECTED_EVENTS
+    });
   }
 
   render() {
@@ -63,7 +78,7 @@ class Calendar extends Component {
           selectedStation={this.state.selectedStation}
           selectedDate={this.state.selectedDate}
           selectedEvents={this.state.selectedEvents}
-          onEventsChange={this.onEventsChange} />
+          onEventChange={this.onEventChange} />
       </div>
     );
   }

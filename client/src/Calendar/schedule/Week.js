@@ -148,7 +148,7 @@ class Week extends Component {
         //eventList.sort((a, b) => {return a.start.isBefore(b.start)});
         data.events.push(<EventBox events={eventList} offset={offset}
           selectedEvents={this.props.selectedEvents}
-          onEventsChange={this.props.onEventsChange}></EventBox>);
+          onEventChange={this.props.onEventChange}></EventBox>);
       }
 
     }

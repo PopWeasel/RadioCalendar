@@ -18,21 +18,23 @@ class Event extends Component {
     }
   }
 
+  componentDidMount() {
+
+  }
+
   toggleEventActive = (e, event) => {
-    const active = this.state.active ? false : true;
-    console.log(event.pid + ": " + active);
-    this.setState({
-      active: active
-    });
-    const selectedEvents = this.props.selectedEvents;
-    if (active) {
-      selectedEvents[event.pid] = event;
-    } else {
-      if (event.pid in selectedEvents) {
-        delete selectedEvents[event.pid];
+    this.setState((prevState, props) => {
+      const active = prevState.active ? false : true;
+      if (active) {
+        console.log(event.pid + ": " + active);
       }
-    }
-    this.props.onEventsChange(selectedEvents);
+      let value = null;
+      if (active) {
+        value = event;
+      }
+      props.onEventChange(event.pid, value);
+      return({active: active});
+    });
   };
 
   render() {
@@ -50,7 +52,10 @@ class Event extends Component {
     }
     const pid = <Typography variant="body1">{event.pid}</Typography>;
     //const divStyle = this.state.active ? styles.selected : null;
-    console.log(`Rendering ${event.title}:${event.pid} = ${this.state.active}`);
+    if (this.state.active) {
+      console.log(`Rendering ${event.title}:${event.pid} = ${this.state.active}`);
+    }
+
     return(
       <div>
         {title}
