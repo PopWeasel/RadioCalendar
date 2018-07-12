@@ -16,11 +16,11 @@ class App extends Component {
 
   render() {
     return (
-      //<React.StrictMode>
         <ErrorBoundary>
-          <Calendar stations={this.state.config.stations} />
+          <React.StrictMode>
+            <Calendar stations={this.state.config.stations} />
+          </React.StrictMode>
         </ErrorBoundary>
-      //</React.StrictMode>
     );
   }
 }

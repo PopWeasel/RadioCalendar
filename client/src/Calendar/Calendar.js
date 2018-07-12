@@ -36,14 +36,14 @@ class Calendar extends Component {
     this.setState({selectedStation: selectedStation});
   }
 
-  onEventChange = (pid, event) => {
+  onEventChange = (event) => {
     //using second form of setstate in order to access state
     this.setState((prevState, props) => {
       const selectedEvents = {...prevState.selectedEvents};
-      if (pid in selectedEvents && event == null) {
-        delete selectedEvents[pid];
+      if (event.pid in selectedEvents) {
+        delete selectedEvents[event.pid];
       } else {
-        selectedEvents[pid] = event;
+        selectedEvents[event.pid] = event;
       }
       return ({'selectedEvents': selectedEvents});
     });

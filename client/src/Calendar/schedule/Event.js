@@ -9,32 +9,10 @@ import styles from './Event.css';
 class Event extends Component {
   constructor(props) {
     super(props);
-    let active = false;
-    if (this.props.event.id in this.props.selectedEvents) {
-      active = true;
-    }
-    this.state = {
-      active: active
-    }
-  }
-
-  componentDidMount() {
-
   }
 
   toggleEventActive = (e, event) => {
-    this.setState((prevState, props) => {
-      const active = prevState.active ? false : true;
-      if (active) {
-        console.log(event.pid + ": " + active);
-      }
-      let value = null;
-      if (active) {
-        value = event;
-      }
-      props.onEventChange(event.pid, value);
-      return({active: active});
-    });
+    this.props.onEventChange(event);
   };
 
   render() {
@@ -52,8 +30,13 @@ class Event extends Component {
     }
     const pid = <Typography variant="body1">{event.pid}</Typography>;
     //const divStyle = this.state.active ? styles.selected : null;
-    if (this.state.active) {
-      console.log(`Rendering ${event.title}:${event.pid} = ${this.state.active}`);
+
+    let active = false;
+    if (this.props.event.id in this.props.selectedEvents) {
+      active = true;
+    }
+    if (active) {
+      console.log(`Rendering ${event.title}:${event.pid} = ${active}`);
     }
 
     return(
@@ -65,7 +48,7 @@ class Event extends Component {
         {time}
         {pid}
         <Checkbox
-          checked={this.state.active}
+          checked={active}
           onChange={e => this.toggleEventActive(e, event)}
           color="primary"
         />
