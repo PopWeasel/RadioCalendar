@@ -32,11 +32,12 @@ class Event extends Component {
     //const divStyle = this.state.active ? styles.selected : null;
 
     let active = false;
-    if (this.props.event.id in this.props.selectedEvents) {
+    if (this.props.event.pid in this.props.selectedEvents) {
       active = true;
     }
     if (active) {
       console.log(`Rendering ${event.title}:${event.pid} = ${active}`);
+      //console.log(this.props.selectedEvents);
     }
 
     return(
