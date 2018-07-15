@@ -23,7 +23,7 @@ class ScheduleParser {
     let timetable = await this.cache.getCached(station, year, week);
     if (timetable == null) {
       const data = await this._fetchSchedule(url);
-      timetable = await this._parseBody(data, year);
+      timetable = await this._parseBody(station, data, year);
       await this.cache.setCache(timetable, station, year, week);
     }
 
@@ -41,7 +41,7 @@ class ScheduleParser {
     }
   }
 
-  async _parseBody(html, year) {
+  async _parseBody(station, html, year) {
     return new Promise((resolve, reject) => {
       console.log(`_parseBody()`);
       const timetable = {
@@ -105,6 +105,7 @@ class ScheduleParser {
                 }
               }
               const event = {
+                station: station,
                 start: moment(start),
                 end: moment(end),
                 title: mainTitle,
