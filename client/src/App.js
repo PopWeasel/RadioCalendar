@@ -17,7 +17,9 @@ class App extends Component {
   render() {
     return (
         <ErrorBoundary>
-          <Calendar stations={this.state.config.stations} />
+          <React.StrictMode>
+            <Calendar stations={this.state.config.stations} />
+          </React.StrictMode>
         </ErrorBoundary>
     );
   }

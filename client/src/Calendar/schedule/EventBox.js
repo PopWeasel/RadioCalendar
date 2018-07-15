@@ -18,7 +18,7 @@ class EventBox extends Component {
 
       events.push(
         <Event event={eventData.event}
-        onEventsChange={this.props.onEventsChange}
+        onEventChange={this.props.onEventChange}
         selectedEvents={this.props.selectedEvents}/>
       );
     }

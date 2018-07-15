@@ -3,34 +3,16 @@ import React, {Component} from 'react';
 import moment from "moment";
 import Typography from '@material-ui/core/Typography';
 import withTheme from '@material-ui/core/styles/withTheme';
+import Checkbox from '@material-ui/core/Checkbox';
 import styles from './Event.css';
 
 class Event extends Component {
   constructor(props) {
     super(props);
-    let active = false;
-    if (this.props.event.id in this.props.selectedEvents) {
-      active = true;
-    }
-    this.state = {
-      active: active
-    }
   }
 
   toggleEventActive = (e, event) => {
-    const active = this.state.active ? false : true;
-    this.setState({
-      active: active
-    });
-    const selectedEvents = this.props.selectedEvents;
-    if (active) {
-      selectedEvents[event.pid] = event;
-    } else {
-      if (event.pid in selectedEvents) {
-        delete selectedEvents[event.pid];
-      }
-    }
-    this.props.onEventsChange(selectedEvents);
+    this.props.onEventChange(event);
   };
 
   render() {
@@ -47,15 +29,30 @@ class Event extends Component {
       episode = <Typography variant="body2">{event.episode}/{event.total}</Typography>
     }
     const pid = <Typography variant="body1">{event.pid}</Typography>;
-    const divStyle = this.state.active ? styles.selected : null;
+    //const divStyle = this.state.active ? styles.selected : null;
+
+    let active = false;
+    if (this.props.event.pid in this.props.selectedEvents) {
+      active = true;
+    }
+    if (active) {
+      console.log(`Rendering ${event.title}:${event.pid} = ${active}`);
+      //console.log(this.props.selectedEvents);
+    }
+
     return(
-      <div onClick={e => this.toggleEventActive(e, event)} className={divStyle}>
+      <div>
         {title}
         {subtitle}
         {episode}
         {synopsis}
         {time}
         {pid}
+        <Checkbox
+          checked={active}
+          onChange={e => this.toggleEventActive(e, event)}
+          color="primary"
+        />
       </div>
     );
   }
