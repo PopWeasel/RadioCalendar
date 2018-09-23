@@ -35,10 +35,12 @@ class Event extends Component {
     if (this.props.event.pid in this.props.selectedEvents) {
       active = true;
     }
+    /*
     if (active) {
       console.log(`Rendering ${event.title}:${event.pid} = ${active}`);
       //console.log(this.props.selectedEvents);
     }
+    */
 
     return(
       <div>

@@ -6,6 +6,7 @@ class ErrorBoundary extends Component {
     this.state = { hasError: false };
   }
 
+  
   componentDidCatch(error, info) {
     // Display fallback UI
     this.setState({

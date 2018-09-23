@@ -71,7 +71,7 @@ class ScheduleParser {
             for (let entry of entries) {
               const entryTimeElement = entry.querySelector(".broadcast__info");
               const start = entryTimeElement.querySelector(".broadcast__time").getAttribute("content");
-              const end = entryTimeElement.querySelector("meta").getAttribute("content")
+              //const end = entryTimeElement.querySelector("meta").getAttribute("content")
 
               const entryDetails = entry.querySelector(".programme__titles");
 
@@ -107,7 +107,7 @@ class ScheduleParser {
               const event = {
                 station: station,
                 start: moment(start),
-                end: moment(end),
+                end: moment(start).add(5, "m"),
                 title: mainTitle,
                 subTitle: subTitle,
                 url: eventURL,
