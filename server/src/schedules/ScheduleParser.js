@@ -74,57 +74,75 @@ class ScheduleParser {
               //const end = entryTimeElement.querySelector("meta").getAttribute("content")
 
               const entryDetails = entry.querySelector(".programme__titles");
+              //the calendar format changed so now have to check to ensure
+              //entryDetails is not null
               if (entryDetails) {
                 const mainTitleSpan = entryDetails.querySelector(".programme__title");
-              const mainTitle = mainTitleSpan.querySelector('span').textContent;
+                const mainTitle = mainTitleSpan.querySelector('span').textContent;
 
-              const subTitleSpan = entryDetails.querySelector(".programme__subtitle");
-              let subTitle;
-              if (subTitleSpan != null) {
-                subTitle = subTitleSpan.querySelector('span').textContent;
-              }
-              const eventURL = entryDetails.querySelector("a").href;
-              const pid = eventURL.split("/").pop();
-
-              const synopsisElement = entry.querySelector(".programme__synopsis");
-              let synopsis, episode, total;
-              if (synopsisElement != null) {
-                synopsis = synopsisElement.querySelector("span:not([datatype]):not(.programme__groupsize) ").textContent;
-                const episodeElement = synopsisElement.querySelector("abbr");
-                if (episodeElement != null) {
-                  const numElement = episodeElement.querySelector("span[datatype]");
-                  if (numElement != null) {
-                    episode = numElement.textContent;
-                  }
-                  const totalElement = episodeElement.querySelector(".programme__groupsize");
-                  if (totalElement != null) {
-                    total = totalElement.textContent;
-                  }
-                  //console.log(`${mainTitle} => ${total} ${episode}`);
-
+                const subTitleSpan = entryDetails.querySelector(".programme__subtitle");
+                let subTitle;
+                if (subTitleSpan != null) {
+                  subTitle = subTitleSpan.querySelector('span').textContent;
                 }
-              }
-              const eventStart = moment(start);
-              const remainder = 5 - (eventStart.minute() % 5);
-              eventStart.add(remainder, "m");
-              const eventEnd = moment(eventStart).add(10, "m")
-              const event = {
-                station: station,
-                start: eventStart,
-                end: eventEnd,
-                title: mainTitle,
-                subTitle: subTitle,
-                url: eventURL,
-                pid: pid,
-                episode: episode,
-                total: total,
-                synopsis: synopsis
-              };
-              timetable.events[dayNum].push(event);  
-              }
-              
-            }
+                const eventURL = entryDetails.querySelector("a").href;
+                const pid = eventURL.split("/").pop();
 
+                const synopsisElement = entry.querySelector(".programme__synopsis");
+                let synopsis, episode, total;
+                if (synopsisElement != null) {
+                  synopsis = synopsisElement.querySelector("span:not([datatype]):not(.programme__groupsize) ").textContent;
+                  const episodeElement = synopsisElement.querySelector("abbr");
+                  if (episodeElement != null) {
+                    const numElement = episodeElement.querySelector("span[datatype]");
+                    if (numElement != null) {
+                      episode = numElement.textContent;
+                    }
+                    const totalElement = episodeElement.querySelector(".programme__groupsize");
+                    if (totalElement != null) {
+                      total = totalElement.textContent;
+                    }
+                    //console.log(`${mainTitle} => ${total} ${episode}`);
+
+                  }
+                }
+                const eventStart = moment(start);
+
+                /*
+                const remainder = 5 - (eventStart.minute() % 5);
+                eventStart.add(remainder, "m");
+                */
+                //const eventEnd = moment(eventStart).add(10, "m")
+                const event = {
+                  station: station,
+                  start: eventStart,
+                  //end: eventEnd,
+                  title: mainTitle,
+                  subTitle: subTitle,
+                  url: eventURL,
+                  pid: pid,
+                  episode: episode,
+                  total: total,
+                  synopsis: synopsis
+                };
+                timetable.events[dayNum].push(event);
+              }
+              //sort events
+              timetable.events[dayNum].sort((a,b) => (a.start.diff(b.start)));
+              let end;
+              for(const event of timetable.events[dayNum].reverse()) {
+                if (end == null) {
+                  end = event.start.clone();
+                  end.hour(23);
+                  end.minute(59);
+                }
+                event.end = end;
+                //the end for the next programme will be the start of this -1
+                end = event.start.clone().subtract(1, "m");
+                //onsole.log(`${dayNum}:${event.title} => ${event.start} - ${event.end}`);
+
+              }
+            }
           }
         }
       }
