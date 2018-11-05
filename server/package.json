@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./src/server.js --config=$CONFIG",
     "dev": "nodemon ./src/server.js --config=$CONFIG",
-    "dev-server": "nodemon ./src/server.js --config=../config/app-config.json",
+    "dev-server": "nodemon ./src/server.js --inspect --config=../config/app-config.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
