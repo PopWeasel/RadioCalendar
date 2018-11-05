@@ -31,7 +31,7 @@ class ScheduleParser {
   }
 
   async _fetchSchedule(url) {
-    //console.log(`_fetchSchedule(${url}`);
+    console.log(`_fetchSchedule(${url}`);
     const response = await fetch(url);
     if (response.status == 200) {
       const text = await response.text();
@@ -74,8 +74,8 @@ class ScheduleParser {
               //const end = entryTimeElement.querySelector("meta").getAttribute("content")
 
               const entryDetails = entry.querySelector(".programme__titles");
-
-              const mainTitleSpan = entryDetails.querySelector(".programme__title");
+              if (entryDetails) {
+                const mainTitleSpan = entryDetails.querySelector(".programme__title");
               const mainTitle = mainTitleSpan.querySelector('span').textContent;
 
               const subTitleSpan = entryDetails.querySelector(".programme__subtitle");
@@ -104,10 +104,14 @@ class ScheduleParser {
 
                 }
               }
+              const eventStart = moment(start);
+              const remainder = 5 - (eventStart.minute() % 5);
+              eventStart.add(remainder, "m");
+              const eventEnd = moment(eventStart).add(10, "m")
               const event = {
                 station: station,
-                start: moment(start),
-                end: moment(start).add(5, "m"),
+                start: eventStart,
+                end: eventEnd,
                 title: mainTitle,
                 subTitle: subTitle,
                 url: eventURL,
@@ -116,7 +120,9 @@ class ScheduleParser {
                 total: total,
                 synopsis: synopsis
               };
-              timetable.events[dayNum].push(event);
+              timetable.events[dayNum].push(event);  
+              }
+              
             }
 
           }
