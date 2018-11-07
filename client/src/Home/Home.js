@@ -38,6 +38,12 @@ onListEventsClick = (e) => {
   });
 }
 
+onCalendarClick = (e) => {
+  this.setState({
+    showCalendar: true
+  });
+}
+
 render() {
     let mainElement;
 
@@ -50,7 +56,8 @@ render() {
     } else {
       return <EventList
         selectedEvents={this.state.selectedEvents}
-        onEventChange={this.onEventChange} />
+        onEventChange={this.onEventChange}
+        onCalendarClick={this.onCalendarClick} />
     }
   }
 }

@@ -46,10 +46,9 @@ class Event extends Component {
       <div>
         {title}
         {subtitle}
+        {time}
         {episode}
         {synopsis}
-        {time}
-        {pid}
         <Checkbox
           checked={active}
           onChange={e => this.toggleEventActive(e, event)}

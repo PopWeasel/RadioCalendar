@@ -20,8 +20,6 @@ class Calendar extends Component {
       stations: this.props.stations,
       selectedStation: this.props.stations[0],
       selectedDate: lastWeekDate,
-      //selectedEvents: {},
-      //viewData: this.WEEK
     };
   }
 
@@ -34,30 +32,6 @@ class Calendar extends Component {
     const selectedStation = stations[stations.findIndex(station => station.id === selectedStationId)];
     this.setState({selectedStation: selectedStation});
   }
-
-/*
-  onEventChange = (event) => {
-    //using second form of setstate in order to access state
-    this.setState((prevState, props) => {
-      const selectedEvents = {...prevState.selectedEvents};
-      if (event.pid in selectedEvents) {
-        delete selectedEvents[event.pid];
-      } else {
-        selectedEvents[event.pid] = event;
-      }
-      return ({' selectedEvents': selectedEvents});
-    });
-  }
-
-  onListEventsClick = (e) => {
-    for (const pid of Object.keys(this.state.selectedEvents)) {
-      console.log(pid);
-    }
-    this.setState({
-      viewData: this.SELECTED_EVENTS
-    });
-  }
-  */
 
   render() {
     return(
