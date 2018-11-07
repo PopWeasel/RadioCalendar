@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import ReactDOM from "react-dom";
-import Calendar from './Calendar/Calendar';
+import Homepage from './Home/Home';
 import ErrorBoundary from "./components/ErrorBoundary";
 
 import 'typeface-roboto'
@@ -16,11 +16,11 @@ class App extends Component {
 
   render() {
     return (
-        <ErrorBoundary>
-          <React.StrictMode>
-            <Calendar stations={this.state.config.stations} />
-          </React.StrictMode>
-        </ErrorBoundary>
+        //<ErrorBoundary>
+          //<React.StrictMode>
+            <Homepage config={this.state.config} />
+          //</React.StrictMode>
+       //</ErrorBoundary>
     );
   }
 }

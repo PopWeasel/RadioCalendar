@@ -15,14 +15,13 @@ class Calendar extends Component {
     super(props);
     moment.locale('en-GB');
     this.WEEK = "week";
-    this.SELECTED_EVENTS = "selected";
     const lastWeekDate = moment().startOf('isoWeek').toDate();
     this.state = {
       stations: this.props.stations,
       selectedStation: this.props.stations[0],
       selectedDate: lastWeekDate,
-      selectedEvents: {},
-      viewData: this.WEEK
+      //selectedEvents: {},
+      //viewData: this.WEEK
     };
   }
 
@@ -36,6 +35,7 @@ class Calendar extends Component {
     this.setState({selectedStation: selectedStation});
   }
 
+/*
   onEventChange = (event) => {
     //using second form of setstate in order to access state
     this.setState((prevState, props) => {
@@ -45,7 +45,7 @@ class Calendar extends Component {
       } else {
         selectedEvents[event.pid] = event;
       }
-      return ({'selectedEvents': selectedEvents});
+      return ({' selectedEvents': selectedEvents});
     });
   }
 
@@ -57,6 +57,7 @@ class Calendar extends Component {
       viewData: this.SELECTED_EVENTS
     });
   }
+  */
 
   render() {
     return(
@@ -71,14 +72,14 @@ class Calendar extends Component {
         <DateSelector
           selectedDate={this.state.selectedDate}
           onDateChange={this.onDateChange} />
-        <Button variant="raised" color="primary" onClick={this.onListEventsClick}>
+        <Button variant="raised" color="primary" onClick={this.props.onListEventsClick}>
           Save selection
         </Button>
         <Week
           selectedStation={this.state.selectedStation}
           selectedDate={this.state.selectedDate}
-          selectedEvents={this.state.selectedEvents}
-          onEventChange={this.onEventChange} />
+          selectedEvents={this.props.selectedEvents}
+          onEventChange={this.props.onEventChange} />
       </div>
     );
   }
