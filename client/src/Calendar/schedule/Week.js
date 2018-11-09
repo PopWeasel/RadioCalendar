@@ -16,6 +16,7 @@ class Week extends Component {
 
     const date = moment(this.props.selectedDate).startOf('isoWeek');
     const station = this.props.selectedStation;
+    this.offset = 2;
 
     this.state =  {
       config: config,
@@ -96,12 +97,13 @@ class Week extends Component {
     const timeline = [];
     for (let i=0; i < 24; i++) {
       const hour = moment().hour(i).minute(0).format("HH:mm");
-      const startRow = i * (60/5) + 1;
-      const endRow = startRow + (60/5);
+      //const startRow = i * (60/5) + 1;
+      //const endRow = startRow + (60/5);
+      const row = i  + this.offset;
+      const column = 1;
       const style = {
-        gridColumn: 1,
-        gridRowStart: startRow,
-        gridRowEnd: endRow
+        gridColumn: column,
+        gridRow: row,
       };
       timeline.push(<div style={style}>{hour}</div>)
     }
@@ -109,7 +111,7 @@ class Week extends Component {
   }
 
   formatData(days, events) {
-    const offset = 2;
+    //const offset = this.offset;
     const eventLists = [];
     const data = {
       days: [],
@@ -124,29 +126,25 @@ class Week extends Component {
         const start = moment(event.start);
         const end = moment(event.end);
 
-        let startRow = Math.ceil(((start.hour() * 60) + start.minute()) / 5);
-        let endRow = Math.floor(((end.hour() * 60) + end.minute()) / 5);
-        if (endRow === 0) {
-          endRow = 288;
-        }
-        const eventIndex = i + (startRow * this.state.days.length);
+        const row = start.hour();
+        const eventIndex = i + (row * this.state.days.length);
         if (eventLists[eventIndex] == null) {
           eventLists[eventIndex] = [];
         }
         eventLists[eventIndex].push({
           event: event,
           col: i,
-          startRow: startRow,
-          endRow: endRow
+          startRow: row,
+          offset: this.offset
         });
       }
-      data.days.push(<Day day={day} column={i} offset={offset} row={1}></Day>);
+      data.days.push(<Day day={day} column={i} offset={this.offset} row={1}></Day>);
     }
 
     for (let eventList of eventLists) {
       if (eventList) {
         //eventList.sort((a, b) => {return a.start.isBefore(b.start)});
-        data.events.push(<EventBox events={eventList} offset={offset}
+        data.events.push(<EventBox events={eventList.reverse()} offset={this.offset}
           selectedEvents={this.props.selectedEvents}
           onEventChange={this.props.onEventChange}></EventBox>);
       }

@@ -12,9 +12,6 @@ class EventBox extends Component {
     for (const eventData of this.props.events) {
       column = eventData.col;
       startRow = eventData.startRow;
-      if (eventData.endRow > endRow){
-        endRow = eventData.endRow;
-      }
 
       events.push(
         <Event event={eventData.event}
@@ -23,11 +20,9 @@ class EventBox extends Component {
       );
     }
 
-    //console.log(`${event.title} Times: ${start.format("HH:mm")} - ${end.format("HH:mm")} => ${startRow} - ${endRow}`);
     const style = {
       gridColumn: column + offset,
-      gridRowStart: startRow + offset,
-      gridRowEnd: endRow + 1
+      gridRow: startRow + offset,
     };
 
     return(
