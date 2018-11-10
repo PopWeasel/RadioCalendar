@@ -29,21 +29,19 @@ class Event extends Component {
       episode = <Typography variant="body2">{event.episode}/{event.total}</Typography>
     }
     const pid = <Typography variant="body1">{event.pid}</Typography>;
-    //const divStyle = this.state.active ? styles.selected : null;
 
     let active = false;
     if (this.props.event.pid in this.props.selectedEvents) {
       active = true;
     }
-    /*
-    if (active) {
-      console.log(`Rendering ${event.title}:${event.pid} = ${active}`);
-      //console.log(this.props.selectedEvents);
+    let selectedClasses = `${styles.event} ` + ((active) ? `${styles.active}` : '');
+    //if being rendered in event card, apply different css classes
+    if (this.props.cardStyle) {
+
     }
-    */
 
     return(
-      <div>
+      <div className={selectedClasses} onClick={e => this.toggleEventActive(e, event)}>
         {title}
         {subtitle}
         {time}
@@ -51,7 +49,6 @@ class Event extends Component {
         {synopsis}
         <Checkbox
           checked={active}
-          onChange={e => this.toggleEventActive(e, event)}
           color="primary"
         />
       </div>

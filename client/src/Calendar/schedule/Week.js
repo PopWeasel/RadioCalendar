@@ -171,7 +171,7 @@ class Week extends Component {
     };
     return (
       <div >
-        <Typography variant="headline">Selected: {this.props.selectedStation.name} Week: {weekOfYear}</Typography>
+        <Typography variant="headline">Showing: {this.props.selectedStation.name} Week: {weekOfYear}</Typography>
         <div className="timetable" style={timetableStyle}>
           {timeline}
           {formattedData.days}

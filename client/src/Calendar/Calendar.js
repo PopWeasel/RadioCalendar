@@ -29,26 +29,33 @@ class Calendar extends Component {
 
   onStationChange = (selectedStationId) => {
     const stations = this.state.stations;
-    const selectedStation = stations[stations.findIndex(station => station.id === selectedStationId)];
+    const selectedStation = stations[
+      stations.findIndex(station => station.id === selectedStationId)
+    ];
     this.setState({selectedStation: selectedStation});
   }
 
   render() {
     return(
       <div>
-        <Typography variant="title">
-          Schedule
-        </Typography>
-        <StationList
-          stations={this.state.stations}
-          selectedStation={this.state.selectedStation}
-          onStationChange={this.onStationChange} />
-        <DateSelector
-          selectedDate={this.state.selectedDate}
-          onDateChange={this.onDateChange} />
-        <Button variant="raised" color="primary" onClick={this.props.onListEventsClick}>
-          Save selection
-        </Button>
+        <div>
+          <Typography variant="title">
+            Schedule
+          </Typography>
+          <StationList
+            stations={this.state.stations}
+            selectedStation={this.state.selectedStation}
+            onStationChange={this.onStationChange} />
+          <DateSelector
+            selectedDate={this.state.selectedDate}
+            onDateChange={this.onDateChange} />
+          <Button
+            variant="raised"
+            color="primary"
+            onClick={this.props.onListEventsClick}>
+            View selection
+          </Button>
+        </div>
         <Week
           selectedStation={this.state.selectedStation}
           selectedDate={this.state.selectedDate}
