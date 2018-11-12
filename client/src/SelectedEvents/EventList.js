@@ -9,13 +9,31 @@ import EventCard from "./EventCard";
 class EventList extends Component {
   constructor(props) {
     super(props);
+    this.pids = [];
   }
 
+  onDownloadClick = (e) => {
+    console.log('onDownloadClick');
+  }
 
+  onPidClick = (e) => {
+    console.log('onPidClick');
+    let output = "";
+    for (const index in this.pids) {
+      output += `${this.pids[index]}\n`;
+    }
+    const file = new Blob([output], {type: 'text/plain'});
+    const element = document.createElement("a");
+    element.href = URL.createObjectURL(file);
+    element.download = "pids.txt";
+    element.click();
+  }
 
   render() {
     const events = [];
+    this.pids = [];
     for (const pid in this.props.selectedEvents) {
+      this.pids.push(pid);
       events.push(
         <EventCard
           event={this.props.selectedEvents[pid]}
@@ -24,13 +42,32 @@ class EventList extends Component {
       );
     }
 
+    const headingStyle = {
+      'marginRight': '20px'
+    };
+
     return (
       <div>
-        <Typography variant="title">Selected Events</Typography>
-        <Button variant="raised" color="primary" onClick={this.props.onCalendarClick}>
+        <Typography variant="title" style={headingStyle}>Selected Events</Typography>
+        <Button
+          variant="raised"
+          color="primary"
+          onClick={this.props.onCalendarClick}
+          style={headingStyle} >
           To Calendar
         </Button>
-        <Button variant="raised" color="primary" onClick={this.onDownloadClick}>
+        <Button
+          variant="raised"
+          color="primary"
+          onClick={this.onPidClick}
+          style={headingStyle} >
+          Download pids
+        </Button>
+        <Button
+          variant="raised"
+          color="primary"
+          onClick={this.onDownloadClick}
+          style={headingStyle} >
           Download
         </Button>
         {events}

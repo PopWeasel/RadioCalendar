@@ -36,23 +36,29 @@ class Calendar extends Component {
   }
 
   render() {
+    const headingStyle = {
+      'marginRight': '20px'
+    };
     return(
       <div>
+        <Typography variant="title">
+          Schedule
+        </Typography>
         <div>
-          <Typography variant="title">
-            Schedule
-          </Typography>
           <StationList
             stations={this.state.stations}
             selectedStation={this.state.selectedStation}
-            onStationChange={this.onStationChange} />
+            onStationChange={this.onStationChange}
+            style={headingStyle} />
           <DateSelector
             selectedDate={this.state.selectedDate}
-            onDateChange={this.onDateChange} />
+            onDateChange={this.onDateChange}
+            style={headingStyle} />
           <Button
             variant="raised"
             color="primary"
-            onClick={this.props.onListEventsClick}>
+            onClick={this.props.onListEventsClick}
+            style={headingStyle} >
             View selection
           </Button>
         </div>

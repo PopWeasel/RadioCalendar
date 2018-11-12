@@ -30,9 +30,6 @@ onEventChange = (event) => {
 }
 
 onListEventsClick = (e) => {
-  for (const pid of Object.keys(this.state.selectedEvents)) {
-    console.log(pid);
-  }
   this.setState({
     showCalendar: false
   });

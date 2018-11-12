@@ -12,10 +12,14 @@ class EventCard extends Component {
   }
 
   render() {
-
+    const cardsStyle = {
+      'display': 'flex',
+      'justifyContent': 'space-between',
+      'flexWrap': 'wrap'
+    }
 
     return (
-      <div>
+      <div style={cardsStyle}>
         <Event
         event={this.props.event}
         onEventChange={this.props.onEventChange}

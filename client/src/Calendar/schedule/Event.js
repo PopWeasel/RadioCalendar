@@ -37,7 +37,7 @@ class Event extends Component {
     let selectedClasses = `${styles.event} ` + ((active) ? `${styles.active}` : '');
     //if being rendered in event card, apply different css classes
     if (this.props.cardStyle) {
-
+      selectedClasses = `${styles.card}`;
     }
 
     return(
