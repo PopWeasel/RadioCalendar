@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Event from "./Event";
+import ScheduleEvent from "./ScheduleEvent";
 
 class EventBox extends Component {
 
@@ -14,7 +14,7 @@ class EventBox extends Component {
       startRow = eventData.startRow;
 
       events.push(
-        <Event event={eventData.event}
+        <ScheduleEvent event={eventData.event}
         onEventChange={this.props.onEventChange}
         selectedEvents={this.props.selectedEvents}/>
       );

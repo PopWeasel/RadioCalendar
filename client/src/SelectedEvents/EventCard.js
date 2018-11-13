@@ -11,19 +11,20 @@ class EventCard extends Component {
     super(props);
   }
 
+  removeEventCard = (e, event) => {
+    this.props.onEventChange(event);
+  };
+
   render() {
     const cardsStyle = {
       'display': 'flex',
       'justifyContent': 'space-between',
       'flexWrap': 'wrap'
     }
-
+    const event = this.props.event;
     return (
-      <div style={cardsStyle}>
-        <Event
-        event={this.props.event}
-        onEventChange={this.props.onEventChange}
-        selectedEvents={this.props.selectedEvents}/>
+      <div style={cardsStyle} onClick={e => this.removeEventCard(e, this.props.event)}>
+        <Event event={this.props.event} selectedEvents={this.props.selectedEvents}/>
       </div>
     );
   }

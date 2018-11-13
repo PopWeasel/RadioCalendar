@@ -4,12 +4,17 @@ import moment from "moment";
 import Typography from '@material-ui/core/Typography';
 import withTheme from '@material-ui/core/styles/withTheme';
 import Checkbox from '@material-ui/core/Checkbox';
+import Event from './Event';
+import styles from './Event.css';
 
-class Event extends Component {
+class ScheduleEvent extends Component {
   constructor(props) {
     super(props);
   }
 
+  toggleEventActive = (e, event) => {
+    this.props.onEventChange(event);
+  };
 
   render() {
     const event = this.props.event;
@@ -30,17 +35,22 @@ class Event extends Component {
     if (this.props.event.pid in this.props.selectedEvents) {
       active = true;
     }
+    let selectedClasses = `${styles.event} ` + ((active) ? `${styles.active}` : '');
+    //if being rendered in event card, apply different css classes
+    if (this.props.cardStyle) {
+      selectedClasses = `${styles.card}`;
+    }
 
     return(
-      <div>
-        {title}
-        {subtitle}
-        {time}
-        {episode}
-        {synopsis}
+      <div className={selectedClasses} onClick={e => this.toggleEventActive(e, event)}>
+        <Event event={event} selectedEvents={this.props.selectedEvents}/>
+        <Checkbox
+          checked={active}
+          color="primary"
+        />
       </div>
     );
   }
 }
 
-export default Event;
+export default ScheduleEvent;
