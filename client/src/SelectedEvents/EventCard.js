@@ -16,14 +16,16 @@ class EventCard extends Component {
   };
 
   render() {
-    const cardsStyle = {
+    const cardStyle = {
+      'margin': '2px',
       'display': 'flex',
-      'justifyContent': 'space-between',
-      'flexWrap': 'wrap'
+      'flex': "0 1 24%",
+      'background': 'white'
     }
+
     const event = this.props.event;
     return (
-      <div style={cardsStyle} onClick={e => this.removeEventCard(e, this.props.event)}>
+      <div style={cardStyle} onClick={e => this.removeEventCard(e, this.props.event)}>
         <Event event={this.props.event} selectedEvents={this.props.selectedEvents}/>
       </div>
     );

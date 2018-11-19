@@ -32,6 +32,7 @@ class EventList extends Component {
   render() {
     const events = [];
     this.pids = [];
+
     for (const pid in this.props.selectedEvents) {
       this.pids.push(pid);
       events.push(
@@ -45,6 +46,12 @@ class EventList extends Component {
     const headingStyle = {
       'marginRight': '20px'
     };
+
+    const cardsStyle = {
+      'display': 'flex',
+      'justifyContent': 'space-between',
+      'flexWrap': 'wrap'
+    }
 
     return (
       <div>
@@ -70,7 +77,9 @@ class EventList extends Component {
           style={headingStyle} >
           Download
         </Button>
-        {events}
+        <div style={cardsStyle}>
+          {events}
+        </div>
       </div>
     );
   }
