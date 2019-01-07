@@ -27,7 +27,6 @@ class Week extends Component {
     };
   }
 
-
   componentDidMount() {
     this.fetchData();
   }
@@ -84,8 +83,14 @@ class Week extends Component {
     const date = this.state.date;
     const station = this.state.station;
 
-    const year = date.format("YYYY");
-    const weekOfYear = date.format("ww");
+    let year = date.format("YYYY");
+    const weekOfYear = date.format("WW");
+    const dayOfYear = date.format("DDD");
+    //TODO need to think about how week of year is defined by saturdays
+    if (dayOfYear > 363) {
+      year++;
+    }
+    console.log(`Fetching day of year ${dayOfYear} week ${weekOfYear} from year ${year}`);
     const server = this.state.config.client.proxy;
     const port = this.state.config.server.port;
     //const url = `http://${server}:${port}/station/${station.key}/year/${year}/week/${weekOfYear}`;
